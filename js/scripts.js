@@ -3,6 +3,28 @@ $(function () {
     // init feather icons
     feather.replace();
 
+    // sign in
+    function submit() {
+        if (checkForm()) {
+            $.ajax({
+                async: false,
+                url: 'http://http://101.132.100.188:8080register',
+                type: 'POST',
+                data: {
+                    name: $('#nameBox').val(),
+                    contactWay: $('#phoneNum').val(),
+                },
+                jsonpCallback: "callBack",
+                success: valid(res)
+            });
+        }
+    }
+    // TODO
+    function valid(msg) {
+        if (msg) {
+            $('input.form-control') = "";
+        }
+    }
     // init tooltip & popovers
     $('[data-toggle="tooltip"]').tooltip();
     $('[data-toggle="popover"]').popover();
