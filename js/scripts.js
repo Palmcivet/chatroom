@@ -3,28 +3,47 @@ $(function () {
     // init feather icons
     feather.replace();
 
+    function check_form(msg) {
+        if ($('#form-name').val() == NULL) {
+            $('#form-name').val() = "The password cannot be empty"
+        }
+        else if ($('#form-password').val() == NULL) {
+            $('#form-password').val() = "The name cannot be empty"
+        }
+    }
     // sign in
     function submit() {
-        if (checkForm()) {
+        if (check_form(msg)) {
             $.ajax({
                 async: false,
-                url: 'http://http://101.132.100.188:8080register',
+                url: '/register',
                 type: 'POST',
                 data: {
-                    name: $('#nameBox').val(),
-                    contactWay: $('#phoneNum').val(),
+                    id: $('#form-name').val(),
+                    password: $('#form-password').val(),
                 },
                 jsonpCallback: "callBack",
-                success: valid(res)
+                success: function handle(msg) {
+                    if (msg == 0) {
+                        window.location.href = "chatroom.html";
+                    }
+                    else if (msg == 1) {
+                        $('#form-password').val() = "Worng Password";
+                    }
+                    else {
+                        alert("Network Failure")
+                    }
+                }
             });
         }
     }
     // TODO
-    function valid(msg) {
-        if (msg) {
-            $('input.form-control') = "";
-        }
-    }
+    /**
+     * 0 log in
+     * 1 password error
+     * 2 register and log in
+     */
+
     // init tooltip & popovers
     $('[data-toggle="tooltip"]').tooltip();
     $('[data-toggle="popover"]').popover();
