@@ -1,48 +1,42 @@
-$(function () {
-
-    // init feather icons
-    feather.replace();
-
-    function check_form(msg) {
-        if ($('#form-name').val() == NULL) {
-            $('#form-name').val() = "The password cannot be empty"
-        }
-        else if ($('#form-password').val() == NULL) {
-            $('#form-password').val() = "The name cannot be empty"
-        }
-    }
-    // sign in
-    function submit() {
-        if (check_form(msg)) {
+// sign in
+$(document).ready(function () {
+    /**
+     * 0 log in
+     * 1 password error
+     * 2 register and log in
+     */
+    $('#form-submit').click(function () {
+        if ($('#form-name').val() == '') {
+            alert("The name cannot be empty");
+        } else if ($('#form-password').val() == '') {
+            alert("The password cannot be empty");
+        } else {
             $.ajax({
                 async: false,
                 url: '/register',
                 type: 'POST',
                 data: {
-                    id: $('#form-name').val(),
+                    username: $('#form-name').val(),
                     password: $('#form-password').val(),
                 },
                 jsonpCallback: "callBack",
                 success: function handle(msg) {
                     if (msg == 0) {
                         window.location.href = "chatroom.html";
-                    }
-                    else if (msg == 1) {
+                    } else if (msg == 1) {
                         $('#form-password').val() = "Worng Password";
-                    }
-                    else {
+                    } else {
                         alert("Network Failure")
                     }
                 }
             });
         }
-    }
-    // TODO
-    /**
-     * 0 log in
-     * 1 password error
-     * 2 register and log in
-     */
+    })
+})
+
+$(function () {
+    // init feather icons
+    feather.replace();
 
     // init tooltip & popovers
     $('[data-toggle="tooltip"]').tooltip();
