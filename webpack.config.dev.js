@@ -4,39 +4,24 @@ const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
-  entry: ['./src/index', 'webpack-hot-middleware/client?reload=true'],
+  entry: path.join(__dirname, './src/layout/app.jsx'),
   devtool: 'source-map',
   output: {
-    path: path.join(__dirname),
-    filename: 'bundle.js',
-    publicPath: '/'
+    path: path.join(__dirname, 'test'),
+    filename: 'app.bundle.js',
   },
   plugins: [
     new HtmlWebpackPlugin({
-      inject: true,
-      template: 'index.html'
+      template: path.join(__dirname, './src/layout/app.html'),
+      filename: 'index.html',
+      path: path.join(__dirname, 'test')
     }),
-    new webpack.HotModuleReplacementPlugin(),
-    // Use NoErrorsPlugin for webpack 1.x
-    new webpack.NoEmitOnErrorsPlugin()
   ],
   module: {
-    rules: [
-      {
-        test: /\.js$/,
+    rules: [{
+        test: /\.js[x]?$/,
         exclude: /node_modules/,
         use: ['babel-loader']
-      },
-      {
-        test: /\.(png|jpg)$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 8192
-            }
-          }
-        ]
       },
       {
         test: /\.scss$/,
