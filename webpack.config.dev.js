@@ -1,32 +1,40 @@
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
+var webpack = require('webpack');
+
+const PROJECT = 'todo-list'
+const ENTRY = path.join(__dirname, PROJECT, 'src')
+const OUTPUT = path.join(__dirname, PROJECT, 'dist')
 
 module.exports = {
-  mode: 'development',
-  entry: path.join(__dirname, './src/layout/app.jsx'),
-  devtool: 'source-map',
-  output: {
-    path: path.join(__dirname, 'test'),
-    filename: 'app.bundle.js',
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, './src/layout/app.html'),
-      filename: 'index.html',
-      path: path.join(__dirname, 'test')
-    }),
-  ],
-  module: {
-    rules: [{
-        test: /\.js[x]?$/,
-        exclude: /node_modules/,
-        use: ['babel-loader']
-      },
-      {
-        test: /\.scss$/,
-        use: ['style-loader', 'css-loader', 'sass-loader']
-      }
-    ]
-  }
+	mode: 'development',
+	entry: path.join(ENTRY, 'index.jsx'),
+	devtool: 'source-map',
+	output: {
+		path: OUTPUT,
+		filename: 'index.bundle.js',
+	},
+	resolve: {
+		extensions: ['.js', '.jsx'],
+		modules: [ENTRY, 'node_modules']
+	},
+	plugins: [
+		new HtmlWebpackPlugin({
+			template: path.join(ENTRY, 'index.html'),
+			path: OUTPUT,
+			filename: 'index.bundle.html'
+		}),
+	],
+	module: {
+		rules: [{
+				test: /\.js[x]?$/,
+				exclude: /node_modules/,
+				use: ['babel-loader']
+			},
+			{
+				test: /\.scss$/,
+				use: ['style-loader', 'css-loader', 'sass-loader']
+			}
+		]
+	}
 };
