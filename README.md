@@ -1,16 +1,14 @@
-- [Project](#project)
-    - [TODO list](#todo-list)
-        - [Design](#design)
-        - [Server](#server)
-        - [Changelog](#changelog)
-    - [chatroom](#chatroom)
-        - [Design](#design-1)
-        - [Changelog](#changelog-1)
-            - [1.0.0](#100)
-            - [0.2.1](#021)
-            - [0.1.0](#010)
+- [TODO list](#todo-list)
+    - [Design](#design)
+    - [Server](#server)
+    - [Changelog](#changelog)
+- [chatroom](#chatroom)
+    - [Design](#design-1)
+    - [Changelog](#changelog-1)
+        - [1.0.0](#100)
+        - [0.2.1](#021)
+        - [0.1.0](#010)
 
-# Project
 ## TODO list
 参考自 [React Redux](https://react-redux.js.org/) [文档](http://cn.redux.js.org/)
 

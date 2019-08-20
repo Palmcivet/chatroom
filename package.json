@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "webpack --config webpack.config.dev.js"
+    "build": "webpack --config todo-list/webpack.config.js"
   },
   "dependencies": {
     "react": "^16.9.0",
@@ -21,8 +21,11 @@
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
     "html-webpack-plugin": "^3.2.0",
+    "react-redux": "^7.1.0",
+    "redux": "^4.0.4",
     "style-loader": "^1.0.0",
     "webpack": "^4.39.2",
-    "webpack-cli": "^3.3.6"
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.8.0"
   }
 }
