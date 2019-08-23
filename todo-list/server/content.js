@@ -1,4 +1,4 @@
-export default a = {
+{
     "content": [{
         "id": "l-2324",
         "name": "test list 1",
