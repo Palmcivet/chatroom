@@ -1,5 +1,5 @@
 import React from 'react'
-import { deleteItem } from '../action'
+import { deleteItem } from '../container/action'
 
 /**
  * @onCLick: event
@@ -25,12 +25,12 @@ const Item = ({ onClick, completed, text }) => (
 function List(items) {
     return (
         <ul className="list-ul">
-            {items.forEach((index, item) => (
+            {Array.from(items).forEach((item, index) => (
                 <Item
-                    key={index}
+                    index={index}
                     completed={item.status}
                     text={item.content}
-                    onClick={store.dispatch(deleteItem(item.id))}
+                    onClick={store.dispatch(deleteItem(item.id, item.text))}
                 />
             ))}
         </ul>

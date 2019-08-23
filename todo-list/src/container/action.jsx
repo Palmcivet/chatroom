@@ -1,13 +1,14 @@
-let itemId = 0
+var itemId = 0
 export const addItem = text => ({
     type: 'ADD',
     id: itemId++,
     text
 })
 
-export const deleteItem = id => ({
+export const deleteItem = (id, text) => ({
     type: 'DONE',
-    id
+    id: id,
+    text
 })
 
 export const filterList = filterKey => ({

@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 // import FilterItem from './container/ShowList'
-import AddItem from './layout/AddItem';
+import AddBox from './layout/AddBox';
+import { addItem, deleteItem } from './container/action'
 import List from './layout/List'
-import rootReducer from './container/reducers'
+import rootReducer from './container/reducer'
 
 const API = {
 	items: [{
@@ -41,13 +42,12 @@ const API = {
 
 function App() {
 	const store = createStore(rootReducer)
-	const unsubscribe = store.subscribe(() => alert('加载完毕'))
+	const unsubscribe = store.subscribe(() => alert('加载'))
 	console.log(API.items)
 	return (
 		<Provider store={store}>
-			{/* <FilterItem /> */}
 			<List items={API.items} />
-			<AddItem />
+			<AddBox />
 		</Provider>
 	);
 }

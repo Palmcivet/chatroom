@@ -1,4 +1,4 @@
-function addDelete(state = [], action) {
+export default function operate(state = [], action) {
     switch (action.type) {
         case 'ADD':
             return [
@@ -22,4 +22,3 @@ function addDelete(state = [], action) {
             return state
     }
 }
-export default addDelete
