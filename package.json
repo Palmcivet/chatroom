@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "webpack --config todo-list/webpack.config.js"
+    "build": "webpack --config snake/webpack.config.js"
   },
   "dependencies": {
     "react": "^16.9.0",

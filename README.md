@@ -1,3 +1,4 @@
+- [Snake](#snake)
 - [TODO list](#todo-list)
     - [Design](#design)
     - [Server](#server)
@@ -8,6 +9,9 @@
         - [1.0.0](#100)
         - [0.2.1](#021)
         - [0.1.0](#010)
+
+## Snake
+多人在线贪吃🐍
 
 ## TODO list
 参考自 [React Redux](https://react-redux.js.org/) [文档](http://cn.redux.js.org/)
