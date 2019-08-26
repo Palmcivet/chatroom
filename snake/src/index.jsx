@@ -1,7 +1,8 @@
-import ReactDOM from 'react-dom'
-import App from './App'
+import React from 'react'
+import { render } from 'react-dom'
+import Map from './Components/Map'
 
-ReactDOM.render(
-    <App />,
+render(
+    <Map />,
     document.getElementById('root')
 )
