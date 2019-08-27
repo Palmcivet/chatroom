@@ -1,8 +1,8 @@
 import React from 'react'
 
 const config = {
-    bgLine: 20,
-    bgCell: 20
+    bgLine: 25,
+    bgCell: 25
 }
 
 const Cell = () => {

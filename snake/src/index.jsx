@@ -1,8 +1,9 @@
 import React from 'react'
 import { render } from 'react-dom'
-import Map from './Components/Map'
+import App from './Components/App'
+import './style/index.less'
 
 render(
-    <Map />,
+    <App />,
     document.getElementById('root')
 )

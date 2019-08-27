@@ -1,3 +1,5 @@
+@import './variable';
+
 * {
     padding: 0;
     border: 0;
@@ -7,13 +9,9 @@
     box-sizing: border-box;
 }
 
-.screen {
-    background: #9ead86;
-}
-
 .bg-map {
-    width: 400px;
-    height: 400px;
+    width: @map-width;
+    height: @map-hight;
     margin: auto;
     background: #9ca78b;
 }
@@ -28,14 +26,14 @@
     float: left;
     padding: 1px;
     margin: 0 1px 1px 0;
-    border: 1px solid #879372;
+    border: 1px solid #899378;
     /* border: 1px solid #42a03a; */
 }
 
 .bg-map .cell:after {
     content: "";
     display: block;
-    width: 16px;
-    height: 16px;
+    width: 15px;
+    height: 15px;
     background-color: #98a288;
 }
