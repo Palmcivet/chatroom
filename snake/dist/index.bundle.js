@@ -29707,13 +29707,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Map__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Map */ "./snake/src/Components/Map.jsx");
-/* harmony import */ var _Controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Controller */ "./snake/src/Components/Controller.jsx");
+/* harmony import */ var _Snake__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Snake */ "./snake/src/Components/Snake.jsx");
+/* harmony import */ var _Controller__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Controller */ "./snake/src/Components/Controller.jsx");
+
 
 
 
 
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Map__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Controller__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Snake__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Controller__WEBPACK_IMPORTED_MODULE_3__["default"], null));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -29784,13 +29786,13 @@ function (_Component) {
         case 'up' || false:
           break;
 
+        case 'down' || false:
+          break;
+
         case 'left' || false:
           break;
 
         case 'right' || false:
-          break;
-
-        case 'down' || false:
           break;
 
         default:
@@ -29846,17 +29848,14 @@ function (_Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Config */ "./snake/src/Config.jsx");
 
-var config = {
-  bgLine: 25,
-  bgCell: 25
-};
+
 
 var Cell = function Cell() {
-  return Array(config.bgCell).fill().map(function (indexCell) {
+  return Array(_Config__WEBPACK_IMPORTED_MODULE_1__["default"].bgCell).fill().map(function (index) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "cell",
-      key: indexCell
+      className: "cell"
     });
   });
 };
@@ -29864,15 +29863,95 @@ var Cell = function Cell() {
 var Map = function Map() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "bg-map"
-  }, Array(config.bgLine).fill().map(function (indexLine) {
+  }, Array(_Config__WEBPACK_IMPORTED_MODULE_1__["default"].bgLine).fill().map(function (index) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "line",
-      key: indexLine
+      className: "line"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Cell, null));
   }));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Map);
+
+/***/ }),
+
+/***/ "./snake/src/Components/Snake.jsx":
+/*!****************************************!*\
+  !*** ./snake/src/Components/Snake.jsx ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Config */ "./snake/src/Config.jsx");
+
+
+/**
+ * NULL: N
+ * Food: F
+ * Head: H
+ * Snake:S
+ */
+
+var sMap = Array(_Config__WEBPACK_IMPORTED_MODULE_1__["default"].bgLine * _Config__WEBPACK_IMPORTED_MODULE_1__["default"].bgCell).fill('N');
+
+var Snake = function Snake() {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "bg-map"
+  }, sMap.map(function (item, index) {
+    if (index % _Config__WEBPACK_IMPORTED_MODULE_1__["default"].bgLine == 0) {
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "line",
+        key: index
+      });
+    }
+
+    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "cell",
+      key: index
+    });
+  }));
+}; // const Snake = () => (
+//     <div className="bg-map">
+//         {sMap.map((item, index) => (
+//             <div className={"cell"} key={index}></div>
+//         ))}
+//     </div>
+// )
+
+
+var init = {
+  id: "3d4ca1",
+  place: [13, 12],
+  color: {
+    head: "green"
+  },
+  food: [[1, 3], [9, 9], [4, 12], [8, 22]]
+};
+/* harmony default export */ __webpack_exports__["default"] = (Snake);
+
+/***/ }),
+
+/***/ "./snake/src/Config.jsx":
+/*!******************************!*\
+  !*** ./snake/src/Config.jsx ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var Config = {
+  bgLine: 25,
+  bgCell: 25,
+  spdSnake: 400,
+  // 0.4s per cell
+  spdRefresh: 200 // 0.2s
+
+};
+/* harmony default export */ __webpack_exports__["default"] = (Config);
 
 /***/ }),
 

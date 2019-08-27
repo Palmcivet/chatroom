@@ -1,22 +1,18 @@
 import React from 'react'
-
-const config = {
-    bgLine: 25,
-    bgCell: 25
-}
+import Config from '../Config'
 
 const Cell = () => {
     return (
-        Array(config.bgCell).fill().map((indexCell) => (
-            <div className="cell" key={indexCell}></div>
+        Array(Config.bgCell).fill().map((index) => (
+            <div className={"cell"}></div >
         ))
     )
 }
 
 const Map = () => (
     <div className="bg-map">
-        {Array(config.bgLine).fill().map((indexLine) => (
-            <div className="line" key={indexLine}>
+        {Array(Config.bgLine).fill().map((index) => (
+            <div className={"line"}>
                 <Cell />
             </div>
         ))}
