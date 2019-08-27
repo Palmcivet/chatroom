@@ -95,7 +95,7 @@
 
 exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "* {\n  padding: 0;\n  border: 0;\n  margin: 0;\n  outline: 0;\n  background-color: #dfdfdf;\n  box-sizing: border-box;\n}\n.screen {\n  background: #9ead86;\n}\n.bg-map {\n  width: 450px;\n  height: 450px;\n  margin: auto;\n  background: #9ca78b;\n}\n.bg-map .line {\n  height: 5%;\n}\n.bg-map .cell {\n  width: 5%;\n  height: 100%;\n  float: left;\n  padding: 1px;\n  margin: 0 1px 1px 0;\n  border: 1px solid #899378;\n  /* border: 1px solid #42a03a; */\n}\n.bg-map .cell:after {\n  content: \"\";\n  display: block;\n  width: 15px;\n  height: 15px;\n  background-color: #98a288;\n}\n", ""]);
+exports.push([module.i, "* {\n  padding: 0;\n  border: 0;\n  margin: 0;\n  outline: 0;\n  background-color: #dfdfdf;\n  box-sizing: border-box;\n}\n.bg-map {\n  width: 450px;\n  height: 450px;\n  margin: auto;\n  background: #98a08b;\n}\n.bg-map .line {\n  height: 4%;\n}\n.bg-map .cell {\n  width: 4%;\n  height: 100%;\n  float: left;\n  padding: 1px;\n  border: 1px solid #9fa592;\n}\n.bg-map .cell:after {\n  content: \"\";\n  display: block;\n  width: 13px;\n  height: 13px;\n  background-color: #b3baa7;\n}\n", ""]);
 
 
 /***/ }),
