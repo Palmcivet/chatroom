@@ -1,0 +1,13 @@
+{
+    /*
+     * 同步其他玩家的位置信息，根据转向得出
+     */
+    "id": "3d4ca1",
+    //? optional
+    "behavior": {
+        "eat": [14, 10],
+        "food": [24, 12] //! new food
+    },
+    //? sync check
+    "position": [12, 15]
+}

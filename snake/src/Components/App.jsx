@@ -4,6 +4,7 @@ import Controller from './Controller'
 
 const App = () => (
     <div>
+        {/* <Head /> */}
         <Map />
         <Controller />
     </div>
