@@ -15,11 +15,11 @@ class Controller extends Component {
         switch (dir) {
             case ('up' || 'w'):
                 break;
+            case ('down' || 's'):
+                break;
             case ('left' || 'a'):
                 break;
             case ('right' || 'd'):
-                break;
-            case ('down' || 's'):
                 break;
             default:
                 break;
