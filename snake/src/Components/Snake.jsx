@@ -1,39 +1,46 @@
-import React from 'react'
 import Config from '../Config'
 
 /**
- * NULL: N
- * Food: F
- * Head: H
- * Snake:S
+ * 描述蛇的对象，围绕 body 结构进行操作
+ * @param {String} id - 哈希字符，标识蛇
+ * @param {Array} initPos - 初始时的位置，即头的位置
+ * @param {String} initDir - 初始时的方向
  */
+function Snake(id = '5fece', initPos = [0, 0], initDir = 'U') {
+    this.id = id
+    this.body = initPos
+    this.dir = initDir
 
-const sMap = Array(Config.bgLine * Config.bgCell).fill('N')
+    this.Turn = (changeDir) => {
+        if (not(changeDir in Config.dirA) && not(changeDir in Config.dirB))
+            return "Invalid Argument: changeDir"
+        this.dir = chgDir
+    }
 
-const Snake = () => (
-    <div className="bg-map">
-        {sMap.map(function (item, index) {
-            if (index % Config.bgLine == 0) {
-                <div className="line" key={index}></div>
-            }
-            <div className={"cell"} key={index}></div>
-        })}
-    </div>
-)
+    /**
+     * 描述蛇的常规移动
+     * @param {Array} nextPos - 行进方向上的下一个点，the next point on the way
+     */
+    this.Move = (nextPos) => {
+        if (typeof nextPos !== Array)
+            return "Invalid Argument: nextPos"
+        this.body.reverse()
+        this.body.push(nextPos)
+        this.body.reverse()
+        this.body.pop()
+    }
 
-let init = {
-    id: "3d4ca1",
-    place: [13, 12],
-    color: {
-        head: "green"
-    },
-    food: [
-        [1, 3],
-        [9, 9],
-        [4, 12],
-        [8, 22]
-    ]
+    /**
+     * 描述蛇捕获食物的动作
+     * @param {Array} foodPos - 食物的位置，the position of the food to be eaten
+     */
+    this.Eat = (foodPos) => {
+        if (typeof foodPos !== Array)
+            return "Invalid Argument: foodPos"
+        this.body.reverse()
+        this.body.push(foodPos)
+        this.body.reverse()
+    }
 }
-
 
 export default Snake

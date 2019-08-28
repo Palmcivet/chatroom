@@ -29715,7 +29715,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Snake__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Controller__WEBPACK_IMPORTED_MODULE_3__["default"], null));
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Map__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Controller__WEBPACK_IMPORTED_MODULE_3__["default"], null));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -29851,22 +29851,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Config */ "./snake/src/Config.jsx");
 
 
-
-var Cell = function Cell() {
-  return Array(_Config__WEBPACK_IMPORTED_MODULE_1__["default"].bgCell).fill().map(function (index) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "cell"
-    });
-  });
-};
+var id = 1;
 
 var Map = function Map() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "bg-map"
-  }, Array(_Config__WEBPACK_IMPORTED_MODULE_1__["default"].bgLine).fill().map(function (index) {
+  }, _Config__WEBPACK_IMPORTED_MODULE_1__["default"].map(function (items, line) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "line"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Cell, null));
+      className: "line",
+      key: line
+    }, items.map(function (item, cell) {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: item == 'F' ? "food cell" : item == 'H' ? "head cell" : item == 'B' ? "body cell" : "cell",
+        key: cell,
+        id: id++
+      });
+    }));
   }));
 };
 
@@ -29886,50 +29886,70 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Config */ "./snake/src/Config.jsx");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-
-/**
- * NULL: N
- * Food: F
- * Head: H
- * Snake:S
- */
-
-var sMap = Array(_Config__WEBPACK_IMPORTED_MODULE_1__["default"].bgLine * _Config__WEBPACK_IMPORTED_MODULE_1__["default"].bgCell).fill('N');
-
-var Snake = function Snake() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "bg-map"
-  }, sMap.map(function (item, index) {
-    if (index % _Config__WEBPACK_IMPORTED_MODULE_1__["default"].bgLine == 0) {
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "line",
-        key: index
-      });
-    }
-
-    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "cell",
-      key: index
-    });
-  }));
-}; // const Snake = () => (
-//     <div className="bg-map">
-//         {sMap.map((item, index) => (
-//             <div className={"cell"} key={index}></div>
-//         ))}
-//     </div>
-// )
 
 
 var init = {
   id: "3d4ca1",
   place: [13, 12],
-  color: {
-    head: "green"
-  },
+  direction: "U",
+  color: "blue",
   food: [[1, 3], [9, 9], [4, 12], [8, 22]]
+  /**
+   * 描述蛇的对象
+   * @param {Array} initPos - 初始时的位置，即头的位置
+   * @param {String} initDir - 初始时的方向
+   */
+
 };
+
+function Snake(id, initPos, initDir) {
+  var _this = this;
+
+  this.id = id;
+  this.body = initPos;
+  this.dir = initDir;
+
+  this.Turn = function (changeDir) {
+    if (not(changeDir in _Config__WEBPACK_IMPORTED_MODULE_1__["default"].dirA) && not(changeDir in _Config__WEBPACK_IMPORTED_MODULE_1__["default"].dirB)) return "Invalid Argument: changeDir";
+    _this.dir = chgDir;
+  };
+  /**
+   * 描述蛇的常规移动
+   * @param {Array} nextPos - 行进方向上的下一个点，the next point on the way
+   */
+
+
+  this.Move = function (nextPos) {
+    if (_typeof(nextPos) !== Array) return "Invalid Argument: nextPos";
+
+    _this.body.reverse();
+
+    _this.body.push(nextPos);
+
+    _this.body.reverse();
+
+    _this.body.pop();
+  };
+  /**
+   * 描述蛇捕获食物的动作
+   * @param {Array} foodPos - 食物的位置，the position of the food to be eaten
+   */
+
+
+  this.Eat = function (foodPos) {
+    if (_typeof(foodPos) !== Array) return "Invalid Argument: foodPos";
+
+    _this.body.reverse();
+
+    _this.body.push(foodPos);
+
+    _this.body.reverse();
+  };
+}
+
+var sa = new Snake('2e2', [2, 4], 'U');
 /* harmony default export */ __webpack_exports__["default"] = (Snake);
 
 /***/ }),
@@ -29938,20 +29958,43 @@ var init = {
 /*!******************************!*\
   !*** ./snake/src/Config.jsx ***!
   \******************************/
-/*! exports provided: default */
+/*! exports provided: Config, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Config", function() { return Config; });
 var Config = {
   bgLine: 25,
   bgCell: 25,
+
+  /**
+   * NULL: N
+   * Food: F
+   * Head: H
+   * Body: B
+   */
+  bgStyle: ['N', 'F', 'H', 'B'],
+  dirA: ['U', 'D', 'L', 'R'],
+  dirB: ['W', 'S', 'A', 'D'],
   spdSnake: 400,
   // 0.4s per cell
   spdRefresh: 200 // 0.2s
+  // Temporary
 
 };
-/* harmony default export */ __webpack_exports__["default"] = (Config);
+var Table = new Array();
+
+for (var i = 0; i < Config.bgLine; i++) {
+  Table[i] = new Array(i);
+
+  for (var j = 0; j < Config.bgCell; j++) {
+    // Table[i][j] = 'N';
+    Table[i][j] = Config.bgStyle[0];
+  }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Table);
 
 /***/ }),
 

@@ -6,8 +6,8 @@ import Controller from './Controller'
 const App = () => (
     <div>
         {/* <Head /> */}
-        <Snake />
-        {/* <Map /> */}
+        {/* <Snake /> */}
+        <Map />
         <Controller />
     </div>
 )

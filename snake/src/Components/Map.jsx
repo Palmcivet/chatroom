@@ -1,21 +1,33 @@
 import React from 'react'
-import Config from '../Config'
+import Table from '../Config'
 
-const Cell = () => {
-    return (
-        Array(Config.bgCell).fill().map((index) => (
-            <div className={"cell"}></div >
-        ))
-    )
-}
-
-const Map = () => (
+let id = 1
+const BgMap = () => (
     <div className="bg-map">
-        {Array(Config.bgLine).fill().map((index) => (
-            <div className={"line"}>
-                <Cell />
+        {Table.map((items, line) => (
+            <div className="line" key={line}>
+                {items.map((item, cell) => (
+                    <div className={item == 'F' ? "food cell" : (item == 'H' ? "head cell" : (item == 'B' ? "body cell" : "cell"))}
+                        key={cell}
+                        id={id++}>
+                    </div>
+                ))}
             </div>
         ))}
     </div>
 )
+
+class Map extends React.Component {
+    constructor(this) {
+        super(this)
+    }
+    componentDidMount() {
+    }
+    componentUnMount() {
+    }
+    render() {
+        <BgMap />
+    }
+}
+
 export default Map
