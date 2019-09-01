@@ -29882,7 +29882,7 @@ var BgMap = function BgMap() {
       key: line
     }, items.map(function (item, cell) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: item == 'F' ? "food cell" : item == 'H' ? "head cell" : item == 'B' ? "body cell" : "cell",
+        className: item[0] == 'F' ? "food cell" : item[0] == 'H' ? "head cell" : item[0] == 'B' ? "body cell" : "cell",
         key: cell,
         id: id++
       });
@@ -29914,7 +29914,7 @@ function (_React$Component) {
       var timer = setInterval(function () {
         sa.Move(); // sa.Eat()
 
-        console.log(sa.body); // TODO
+        console.log(sa.head); // TODO
       }, _Config__WEBPACK_IMPORTED_MODULE_1__["Config"].spdSnake);
       window.addEventListener('keypress', function (e) {
         return _this2.handleController(sa, e.key, timer);
@@ -29926,8 +29926,32 @@ function (_React$Component) {
       var _this3 = this;
 
       window.removeEventListener('keypress', function (e) {
-        return _this3.handleController(sa, e.key);
+        return _this3.handleController(sa, e.key, timer);
       });
+    }
+  }, {
+    key: "register",
+    value: function register(style, point) {
+      switch (style) {
+        case 'N':
+          _Config__WEBPACK_IMPORTED_MODULE_1__["Table"][point[0]][point[1]] = 'N';
+          break;
+
+        case 'F':
+          _Config__WEBPACK_IMPORTED_MODULE_1__["Table"][point[0]][point[1]] = 'F';
+          break;
+
+        case 'H':
+          _Config__WEBPACK_IMPORTED_MODULE_1__["Table"][point[0]][point[1]] = 'H';
+          break;
+
+        case 'B':
+          _Config__WEBPACK_IMPORTED_MODULE_1__["Table"][point[0]][point[1]] = 'B';
+          break;
+
+        default:
+          break;
+      }
     }
   }, {
     key: "handleController",
@@ -29996,9 +30020,7 @@ function Snake(id, initDir, initBody) {
   this.dir = initDir;
   this.head = initBody;
   this.body = new Array();
-  this.body[0] = [2, 3];
-  this.body[1] = [1, 3];
-  this.body[2] = [1, 4];
+  this.body[0] = [];
   /**
    * generate the next position
    */
@@ -30106,11 +30128,11 @@ var Config = {
 var Table = new Array();
 
 for (var i = 0; i < Config.bgLine; i++) {
-  Table[i] = new Array(i);
+  Table[i] = new Array();
 
   for (var j = 0; j < Config.bgCell; j++) {
     // Table[i][j] = 'N';
-    Table[i][j] = Config.bgStyle[0];
+    Table[i][j] = [Config.bgStyle[0], ''];
   }
 }
 

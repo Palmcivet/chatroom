@@ -8,7 +8,7 @@ const BgMap = () => (
         {Table.map((items, line) => (
             <div className="line" key={line}>
                 {items.map((item, cell) => (
-                    <div className={item == 'F' ? "food cell" : (item == 'H' ? "head cell" : (item == 'B' ? "body cell" : "cell"))}
+                    <div className={item[0] == 'N'}
                         key={cell}
                         id={id++}>
                     </div>
@@ -25,13 +25,6 @@ class Map extends React.Component {
     }
 
     componentDidMount() {
-        let sa = new Snake('2e2', 'D', [2, 2])
-        let timer = setInterval(
-            () => {
-                sa.Move()
-                // sa.Eat()
-                console.log(sa.body)// TODO
-            }, Config.spdSnake)
         window.addEventListener('keypress',
             (e) => (
                 this.handleController(sa, e.key, timer)
@@ -42,11 +35,29 @@ class Map extends React.Component {
     componentWillUnmount() {
         window.removeEventListener('keypress',
             (e) => (
-                this.handleController(sa, e.key)
+                this.handleController(sa, e.key, timer)
             )
         )
     }
 
+    register(style, point) {
+        switch (style) {
+            case 'N':
+                Table[point[0]][point[1]] = 'N'
+                break;
+            case 'F':
+                Table[point[0]][point[1]] = 'F'
+                break;
+            case 'H':
+                Table[point[0]][point[1]] = 'H'
+                break;
+            case 'B':
+                Table[point[0]][point[1]] = 'B'
+                break;
+            default:
+                break;
+        }
+    }
     handleController(snake, dir, timer) {
         console.log(dir);// TODO
         switch (dir) {
@@ -65,7 +76,6 @@ class Map extends React.Component {
             default:
                 console.log("Please press WASD or ←→↑↓")
                 clearInterval(timer)
-                break
         }
     }
 

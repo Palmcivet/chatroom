@@ -11,9 +11,7 @@ function Snake(id, initDir, initBody) {
     this.dir = initDir
     this.head = initBody
     this.body = new Array()
-    this.body[0] = [2, 3]
-    this.body[1] = [1, 3]
-    this.body[2] = [1, 4]
+    this.body[0] = []
 
     /**
      * generate the next position
@@ -47,11 +45,11 @@ function Snake(id, initDir, initBody) {
      * @param {Array} foodPos - 食物的位置，the position of the food to be eaten
      */
     this.Eat = () => {
-        let tmp = __next()
+        let head = __next()
         this.body.reverse()
-        this.body.push(tmp)
+        this.body.push(head)
         this.body.reverse()
-        return tmp
+        return head
     }
 
     /**
@@ -59,13 +57,14 @@ function Snake(id, initDir, initBody) {
      * @returns {Object}
      */
     this.Move = () => {
-        let tmp = __next()
+        let head = __next()
         this.body.reverse()
-        this.body.push(tmp)
-        this.body.pop()
+        this.body.push(head)
+        let tail = this.body.pop()
         this.body.reverse()
         return {
-            head: tmp
+            head: head,
+            tail: tail
         }
     }
 }
