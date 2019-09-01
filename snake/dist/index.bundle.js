@@ -29876,7 +29876,7 @@ var id = 1;
 var BgMap = function BgMap() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "bg-map"
-  }, _Config__WEBPACK_IMPORTED_MODULE_1__["default"].map(function (items, line) {
+  }, _Config__WEBPACK_IMPORTED_MODULE_1__["Table"].map(function (items, line) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "line",
       key: line
@@ -29910,41 +29910,57 @@ function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      var sa = new _Snake__WEBPACK_IMPORTED_MODULE_2__["default"]('2e2', 'U', [2, 4]);
-      setInterval(sa.Move(), _Config__WEBPACK_IMPORTED_MODULE_1__["Config"].spdSnake);
+      var sa = new _Snake__WEBPACK_IMPORTED_MODULE_2__["default"]('2e2', 'D', [2, 2]);
+      var timer = setInterval(function () {
+        sa.Move(); // sa.Eat()
+
+        console.log(sa.body); // TODO
+      }, _Config__WEBPACK_IMPORTED_MODULE_1__["Config"].spdSnake);
       window.addEventListener('keypress', function (e) {
-        return _this2.handleController(sa, e.key);
+        return _this2.handleController(sa, e.key, timer);
+      });
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      var _this3 = this;
+
+      window.removeEventListener('keypress', function (e) {
+        return _this3.handleController(sa, e.key);
       });
     }
   }, {
     key: "handleController",
-    value: function handleController(snake, dir) {
-      console.log(dir);
+    value: function handleController(snake, dir, timer) {
+      console.log(dir); // TODO
 
       switch (dir) {
-        case 'up' || false:
+        case 'w':
           snake.Turn('U');
+          break;
 
-        case 'down' || false:
+        case 's':
           snake.Turn('D');
+          break;
 
-        case 'left' || false:
+        case 'a':
           snake.Turn('L');
+          break;
 
-        case 'right' || false:
+        case 'd':
           snake.Turn('R');
+          break;
 
         default:
           console.log("Please press WASD or ←→↑↓");
+          clearInterval(timer);
+          break;
       }
     }
   }, {
-    key: "componentUnMount",
-    value: function componentUnMount() {}
-  }, {
     key: "render",
     value: function render() {
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(BgMap, null);
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(BgMap, null);
     }
   }]);
 
@@ -29973,44 +29989,45 @@ __webpack_require__.r(__webpack_exports__);
  * @param {String} initDir - 初始时的方向
  */
 
-function Snake() {
+function Snake(id, initDir, initBody) {
   var _this = this;
 
-  var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '5fece';
-  var initDir = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'U';
-  var initBody = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [1, 1];
   this.id = id;
-  var dir = initDir;
-  var head = initBody;
+  this.dir = initDir;
+  this.head = initBody;
   this.body = new Array();
-  this.body[0] = [];
+  this.body[0] = [2, 3];
+  this.body[1] = [1, 3];
+  this.body[2] = [1, 4];
   /**
    * generate the next position
-   * */
+   */
 
-  selfNext = function selfNext() {
-    var nextPos;
-
-    switch (dir) {
+  var __next = function __next() {
+    switch (_this.dir) {
       case 'U':
-        nextPos = [head[0] - 1, head[1]];
+        _this.head[0] = _this.head[0] - 1;
+        break;
 
       case 'D':
-        nextPos = [head[0] + 1, head[1]];
+        _this.head[0] = _this.head[0] + 1;
+        break;
 
       case 'L':
-        nextPos = [head[0], head[1] - 1];
+        _this.head[1] = _this.head[1] - 1;
+        break;
 
       case 'R':
-        nextPos = [head[0], head[1] + 1];
+        _this.head[1] = _this.head[1] + 1;
+        break;
     }
 
-    return nextPos;
+    return _this.head;
   };
 
   this.Turn = function (changeDir) {
-    if (not(changeDir in _Config__WEBPACK_IMPORTED_MODULE_0__["default"].dirA) && not(changeDir in _Config__WEBPACK_IMPORTED_MODULE_0__["default"].dirB)) return "Invalid Argument: changeDir";
-    dir = changeDir;
+    if (_Config__WEBPACK_IMPORTED_MODULE_0__["Config"].dirA.indexOf(changeDir) == -1 && _Config__WEBPACK_IMPORTED_MODULE_0__["Config"].dirB.indexOf(changeDir) == -1) return "Invalid Argument: changeDir";
+    _this.dir = changeDir;
   };
   /**
    * 描述蛇捕获食物的动作，在捕食时触发
@@ -30019,19 +30036,36 @@ function Snake() {
 
 
   this.Eat = function () {
-    _this.body.reverse().push(selfNext()).reverse();
+    var tmp = __next();
 
-    head = selfNext;
+    _this.body.reverse();
+
+    _this.body.push(tmp);
+
+    _this.body.reverse();
+
+    return tmp;
   };
   /**
    * 描述蛇的常规移动，周期性触发
+   * @returns {Object}
    */
 
 
   this.Move = function () {
-    _this.body.reverse().push(selfNext()).reverse();
+    var tmp = __next();
+
+    _this.body.reverse();
+
+    _this.body.push(tmp);
 
     _this.body.pop();
+
+    _this.body.reverse();
+
+    return {
+      head: tmp
+    };
   };
 }
 
@@ -30043,12 +30077,13 @@ function Snake() {
 /*!******************************!*\
   !*** ./snake/src/Config.jsx ***!
   \******************************/
-/*! exports provided: Config, default */
+/*! exports provided: Config, Table */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Config", function() { return Config; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Table", function() { return Table; });
 var Config = {
   bgLine: 25,
   bgCell: 25,
@@ -30062,8 +30097,8 @@ var Config = {
   bgStyle: ['N', 'F', 'H', 'B'],
   dirA: ['U', 'D', 'L', 'R'],
   dirB: ['W', 'S', 'A', 'D'],
-  spdSnake: 400,
-  // 0.4s per cell
+  spdSnake: 800,
+  // per cell
   spdRefresh: 200 // 0.2s
   // Temporary
 
@@ -30079,7 +30114,7 @@ for (var i = 0; i < Config.bgLine; i++) {
   }
 }
 
-/* harmony default export */ __webpack_exports__["default"] = (Table);
+
 
 /***/ }),
 

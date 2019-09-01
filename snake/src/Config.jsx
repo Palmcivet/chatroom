@@ -1,4 +1,4 @@
-export const Config = {
+const Config = {
     bgLine: 25,
     bgCell: 25,
     /**
@@ -10,7 +10,7 @@ export const Config = {
     bgStyle: ['N', 'F', 'H', 'B'],
     dirA: ['U', 'D', 'L', 'R'],
     dirB: ['W', 'S', 'A', 'D'],
-    spdSnake: 400, // 0.4s per cell
+    spdSnake: 800, // per cell
     spdRefresh: 200, // 0.2s
 }
 
@@ -24,4 +24,4 @@ for (let i = 0; i < Config.bgLine; i++) {
     }
 }
 
-export default Table
+export { Config, Table }

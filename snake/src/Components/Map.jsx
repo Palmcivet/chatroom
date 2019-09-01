@@ -1,5 +1,5 @@
 import React from 'react'
-import Table, { Config } from '../Config'
+import { Table, Config } from '../Config'
 import Snake from "./Snake";
 
 let id = 1
@@ -23,37 +23,54 @@ class Map extends React.Component {
         super(props)
         this.handleController = this.handleController.bind(this)
     }
+
     componentDidMount() {
-        let sa = new Snake('2e2', 'U', [2, 4])
-        setInterval(() => {
-            sa.Move()
-            
-        }, Config.spdSnake)
+        let sa = new Snake('2e2', 'D', [2, 2])
+        let timer = setInterval(
+            () => {
+                sa.Move()
+                // sa.Eat()
+                console.log(sa.body)// TODO
+            }, Config.spdSnake)
         window.addEventListener('keypress',
+            (e) => (
+                this.handleController(sa, e.key, timer)
+            )
+        )
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('keypress',
             (e) => (
                 this.handleController(sa, e.key)
             )
         )
     }
-    handleController(snake, dir) {
-        console.log(dir);
+
+    handleController(snake, dir, timer) {
+        console.log(dir);// TODO
         switch (dir) {
-            case ('up' || 'w'):
+            case 'w':
                 snake.Turn('U')
-            case ('down' || 's'):
+                break
+            case 's':
                 snake.Turn('D')
-            case ('left' || 'a'):
+                break
+            case 'a':
                 snake.Turn('L')
-            case ('right' || 'd'):
+                break
+            case 'd':
                 snake.Turn('R')
+                break
             default:
                 console.log("Please press WASD or ←→↑↓")
+                clearInterval(timer)
+                break
         }
     }
-    componentUnMount() {
-    }
+
     render() {
-        <BgMap />
+        return <BgMap />
     }
 }
 

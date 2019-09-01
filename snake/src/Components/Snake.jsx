@@ -1,4 +1,4 @@
-import Config from '../Config'
+import { Table, Config } from '../Config'
 
 /**
  * 描述蛇的对象，围绕 body 结构进行操作
@@ -6,35 +6,40 @@ import Config from '../Config'
  * @param {Array} initPos - 初始时的位置，即头的位置
  * @param {String} initDir - 初始时的方向
  */
-function Snake(id = '5fece', initDir = 'U', initBody = [1, 1]) {
+function Snake(id, initDir, initBody) {
     this.id = id
-    let dir = initDir
-    let head = initBody
+    this.dir = initDir
+    this.head = initBody
     this.body = new Array()
-    this.body[0] = []
+    this.body[0] = [2, 3]
+    this.body[1] = [1, 3]
+    this.body[2] = [1, 4]
 
     /**
      * generate the next position
-     * */
-    selfNext = () => {
-        let nextPos
-        switch (dir) {
+     */
+    let __next = () => {
+        switch (this.dir) {
             case ('U'):
-                nextPos = [head[0] - 1, head[1]];
+                this.head[0] = this.head[0] - 1
+                break
             case ('D'):
-                nextPos = [head[0] + 1, head[1]];
+                this.head[0] = this.head[0] + 1
+                break
             case ('L'):
-                nextPos = [head[0], head[1] - 1];
+                this.head[1] = this.head[1] - 1
+                break
             case ('R'):
-                nextPos = [head[0], head[1] + 1];
+                this.head[1] = this.head[1] + 1
+                break
         }
-        return nextPos
+        return this.head
     }
 
     this.Turn = (changeDir) => {
-        if (not(changeDir in Config.dirA) && not(changeDir in Config.dirB))
+        if ((Config.dirA.indexOf(changeDir) == -1) && (Config.dirB.indexOf(changeDir) == -1))
             return "Invalid Argument: changeDir"
-        dir = changeDir
+        this.dir = changeDir
     }
 
     /**
@@ -42,16 +47,26 @@ function Snake(id = '5fece', initDir = 'U', initBody = [1, 1]) {
      * @param {Array} foodPos - 食物的位置，the position of the food to be eaten
      */
     this.Eat = () => {
-        this.body.reverse().push(selfNext()).reverse()
-        head = selfNext
+        let tmp = __next()
+        this.body.reverse()
+        this.body.push(tmp)
+        this.body.reverse()
+        return tmp
     }
 
     /**
      * 描述蛇的常规移动，周期性触发
+     * @returns {Object}
      */
     this.Move = () => {
-        this.body.reverse().push(selfNext()).reverse()
+        let tmp = __next()
+        this.body.reverse()
+        this.body.push(tmp)
         this.body.pop()
+        this.body.reverse()
+        return {
+            head: tmp
+        }
     }
 }
 
