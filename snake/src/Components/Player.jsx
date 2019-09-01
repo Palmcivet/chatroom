@@ -1,13 +1,11 @@
 import React from 'react'
 import Snake from './Snake'
 
-let sa = new Snake('2e2', [2, 4], 'U')
-
 let init = {
     id: "3d4ca1",
-    place: [13, 12],
     direction: "U",
     color: "blue",
+    position: [13, 12],
     food: [
         [1, 3],
         [9, 9],
@@ -15,3 +13,9 @@ let init = {
         [8, 22]
     ]
 }
+
+let sa = new Snake('2e2', [2, 4], 'U')
+
+const Palyer = (snake, chgDir) => (
+    pass
+)

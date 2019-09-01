@@ -8,7 +8,7 @@ const App = () => (
         {/* <Head /> */}
         {/* <Snake /> */}
         <Map />
-        <Controller />
+        {/* <Controller /> */}
     </div>
 )
 export default App

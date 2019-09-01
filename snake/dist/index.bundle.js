@@ -29715,7 +29715,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Map__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Controller__WEBPACK_IMPORTED_MODULE_3__["default"], null));
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Map__WEBPACK_IMPORTED_MODULE_1__["default"], null));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -29849,11 +29849,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Config */ "./snake/src/Config.jsx");
+/* harmony import */ var _Snake__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Snake */ "./snake/src/Components/Snake.jsx");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
 
 
 var id = 1;
 
-var Map = function Map() {
+var BgMap = function BgMap() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "bg-map"
   }, _Config__WEBPACK_IMPORTED_MODULE_1__["default"].map(function (items, line) {
@@ -29870,6 +29890,67 @@ var Map = function Map() {
   }));
 };
 
+var Map =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Map, _React$Component);
+
+  function Map(props) {
+    var _this;
+
+    _classCallCheck(this, Map);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Map).call(this, props));
+    _this.handleController = _this.handleController.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(Map, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      var sa = new _Snake__WEBPACK_IMPORTED_MODULE_2__["default"]('2e2', 'U', [2, 4]);
+      setInterval(sa.Move(), _Config__WEBPACK_IMPORTED_MODULE_1__["Config"].spdSnake);
+      window.addEventListener('keypress', function (e) {
+        return _this2.handleController(sa, e.key);
+      });
+    }
+  }, {
+    key: "handleController",
+    value: function handleController(snake, dir) {
+      console.log(dir);
+
+      switch (dir) {
+        case 'up' || false:
+          snake.Turn('U');
+
+        case 'down' || false:
+          snake.Turn('D');
+
+        case 'left' || false:
+          snake.Turn('L');
+
+        case 'right' || false:
+          snake.Turn('R');
+
+        default:
+          console.log("Please press WASD or ←→↑↓");
+      }
+    }
+  }, {
+    key: "componentUnMount",
+    value: function componentUnMount() {}
+  }, {
+    key: "render",
+    value: function render() {
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(BgMap, null);
+    }
+  }]);
+
+  return Map;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
 /* harmony default export */ __webpack_exports__["default"] = (Map);
 
 /***/ }),
@@ -29883,73 +29964,77 @@ var Map = function Map() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Config */ "./snake/src/Config.jsx");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+/* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Config */ "./snake/src/Config.jsx");
 
+/**
+ * 描述蛇的对象，围绕 body 结构进行操作
+ * @param {String} id - 哈希字符，标识蛇
+ * @param {Array} initPos - 初始时的位置，即头的位置
+ * @param {String} initDir - 初始时的方向
+ */
 
-
-var init = {
-  id: "3d4ca1",
-  place: [13, 12],
-  direction: "U",
-  color: "blue",
-  food: [[1, 3], [9, 9], [4, 12], [8, 22]]
-  /**
-   * 描述蛇的对象
-   * @param {Array} initPos - 初始时的位置，即头的位置
-   * @param {String} initDir - 初始时的方向
-   */
-
-};
-
-function Snake(id, initPos, initDir) {
+function Snake() {
   var _this = this;
 
+  var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '5fece';
+  var initDir = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'U';
+  var initBody = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [1, 1];
   this.id = id;
-  this.body = initPos;
-  this.dir = initDir;
+  var dir = initDir;
+  var head = initBody;
+  this.body = new Array();
+  this.body[0] = [];
+  /**
+   * generate the next position
+   * */
+
+  selfNext = function selfNext() {
+    var nextPos;
+
+    switch (dir) {
+      case 'U':
+        nextPos = [head[0] - 1, head[1]];
+
+      case 'D':
+        nextPos = [head[0] + 1, head[1]];
+
+      case 'L':
+        nextPos = [head[0], head[1] - 1];
+
+      case 'R':
+        nextPos = [head[0], head[1] + 1];
+    }
+
+    return nextPos;
+  };
 
   this.Turn = function (changeDir) {
-    if (not(changeDir in _Config__WEBPACK_IMPORTED_MODULE_1__["default"].dirA) && not(changeDir in _Config__WEBPACK_IMPORTED_MODULE_1__["default"].dirB)) return "Invalid Argument: changeDir";
-    _this.dir = chgDir;
+    if (not(changeDir in _Config__WEBPACK_IMPORTED_MODULE_0__["default"].dirA) && not(changeDir in _Config__WEBPACK_IMPORTED_MODULE_0__["default"].dirB)) return "Invalid Argument: changeDir";
+    dir = changeDir;
   };
   /**
-   * 描述蛇的常规移动
-   * @param {Array} nextPos - 行进方向上的下一个点，the next point on the way
-   */
-
-
-  this.Move = function (nextPos) {
-    if (_typeof(nextPos) !== Array) return "Invalid Argument: nextPos";
-
-    _this.body.reverse();
-
-    _this.body.push(nextPos);
-
-    _this.body.reverse();
-
-    _this.body.pop();
-  };
-  /**
-   * 描述蛇捕获食物的动作
+   * 描述蛇捕获食物的动作，在捕食时触发
    * @param {Array} foodPos - 食物的位置，the position of the food to be eaten
    */
 
 
-  this.Eat = function (foodPos) {
-    if (_typeof(foodPos) !== Array) return "Invalid Argument: foodPos";
+  this.Eat = function () {
+    _this.body.reverse().push(selfNext()).reverse();
 
-    _this.body.reverse();
+    head = selfNext;
+  };
+  /**
+   * 描述蛇的常规移动，周期性触发
+   */
 
-    _this.body.push(foodPos);
 
-    _this.body.reverse();
+  this.Move = function () {
+    _this.body.reverse().push(selfNext()).reverse();
+
+    _this.body.pop();
   };
 }
 
-var sa = new Snake('2e2', [2, 4], 'U');
 /* harmony default export */ __webpack_exports__["default"] = (Snake);
 
 /***/ }),

@@ -3,7 +3,7 @@
     "id": "3d4ca1",
     "direction": "L",
     "color": "green",
-    "place": [13, 12],
+    "position": [13, 12],
     "food": [
         [1, 3],
         [9, 9],
