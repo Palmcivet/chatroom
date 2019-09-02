@@ -1,17 +1,8 @@
-import Snake from "./Snake";
+import Map from "./Map"
 
-/**
- * NULL: N
- * Food: F
- * Head: H
- * Body: B
- */
-
- 
-class Map extends React.Component {
+class MapGame extends React.Component {
     constructor(props) {
         super(props)
-        this.handleController = this.handleController.bind(this)
     }
 
     componentDidMount() {
@@ -30,46 +21,9 @@ class Map extends React.Component {
         )
     }
 
-    register(style, point) {
-        switch (style) {
-            case 'N':
-                Table[point[0]][point[1]] = 'N'
-                break;
-            case 'F':
-                Table[point[0]][point[1]] = 'F'
-                break;
-            case 'H':
-                Table[point[0]][point[1]] = 'H'
-                break;
-            case 'B':
-                Table[point[0]][point[1]] = 'B'
-                break;
-            default:
-                break;
-        }
-    }
-    handleController(snake, dir, timer) {
-        console.log(dir);// TODO
-        switch (dir) {
-            case 'w':
-                snake.Turn('U')
-                break
-            case 's':
-                snake.Turn('D')
-                break
-            case 'a':
-                snake.Turn('L')
-                break
-            case 'd':
-                snake.Turn('R')
-                break
-            default:
-                console.log("Please press WASD or ←→↑↓")
-                clearInterval(timer)
-        }
-    }
-
     render() {
-        return <BgMap />
+        return <Map />
     }
 }
+
+export default MapGame

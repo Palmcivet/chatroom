@@ -2,14 +2,18 @@ import { Config } from '../Config'
 
 /**
  * 描述蛇的对象，围绕 body 结构进行操作
- * @param {String} id - 哈希字符，标识蛇
- * @param {Array} initPos - 初始时的位置，即头的位置
+ * @param {String} id - 哈希字符串，标识蛇
+ * @param {String} color - 字符，标识头的颜色
  * @param {String} initDir - 初始时的方向
+ * @param {Array} initBody - 初始时的位置，即头的位置
  */
-function Snake(id, initDir, initBody) {
+function Snake(id, color, initDir, initBody) {
     this.id = id
+    this.color = color
     this.dir = initDir
     this.head = initBody
+    this.next = __next()
+
     this.body = new Array()
     this.body[0] = []
 
@@ -17,21 +21,22 @@ function Snake(id, initDir, initBody) {
      * generate the next position
      */
     let __next = () => {
+        let next = this.head
         switch (this.dir) {
             case ('U'):
-                this.head[0] = this.head[0] - 1
+                next[0] = this.head[0] - 1
                 break
             case ('D'):
-                this.head[0] = this.head[0] + 1
+                next[0] = this.head[0] + 1
                 break
             case ('L'):
-                this.head[1] = this.head[1] - 1
+                next[1] = this.head[1] - 1
                 break
             case ('R'):
-                this.head[1] = this.head[1] + 1
+                next[1] = this.head[1] + 1
                 break
         }
-        return this.head
+        return head
     }
 
     this.Turn = (changeDir) => {
@@ -45,16 +50,22 @@ function Snake(id, initDir, initBody) {
      * @param {Array} foodPos - 食物的位置，the position of the food to be eaten
      */
     this.Eat = () => {
+        // this.body.reverse()
+        // this.body.push(__next())
+
         let head = __next()
         this.body.reverse()
         this.body.push(head)
         this.body.reverse()
-        return head
+        return {
+            head: head,
+            next: __next()
+        }
     }
 
     /**
      * 描述蛇的常规移动，周期性触发
-     * @returns {Object}
+     * @returns {Object} - an object with array
      */
     this.Move = () => {
         let head = __next()
@@ -64,6 +75,7 @@ function Snake(id, initDir, initBody) {
         this.body.reverse()
         return {
             head: head,
+            next: __next(),
             tail: tail
         }
     }

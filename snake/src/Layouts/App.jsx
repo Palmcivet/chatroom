@@ -1,12 +1,12 @@
 import React from 'react'
-import Map from '../Components/Map'
-import Snake from '../Components/Snake'
+import MapGame from '../Components/MapGame'
+import SnakeGame from '../Components/SnakeGame'
 import Controller from './Controller'
 
 const App = () => (
     <div>
         {/* <Snake /> */}
-        <Map />
+        <MapGame />
         <Controller />
     </div>
 )

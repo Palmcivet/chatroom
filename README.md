@@ -16,7 +16,7 @@
 
 ### 文件结构
 - layouts
-    - App：图形界面
+    - App：渲染图形界面
     - Controller：控制器
 - Components
     - Map：构建地图的结构
