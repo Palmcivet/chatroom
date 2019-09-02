@@ -1,14 +1,13 @@
 import React from 'react'
-import Map from './Map'
-import Snake from './Snake'
+import Map from '../Components/Map'
+import Snake from '../Components/Snake'
 import Controller from './Controller'
 
 const App = () => (
     <div>
-        {/* <Head /> */}
         {/* <Snake /> */}
         <Map />
-        {/* <Controller /> */}
+        <Controller />
     </div>
 )
 export default App

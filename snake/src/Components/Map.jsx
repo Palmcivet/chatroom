@@ -1,9 +1,17 @@
 import React from 'react'
-import { Table, Config } from '../Config'
-import Snake from "./Snake";
+import { Config } from '../Config'
+
+let Table = new Array()
+for (let i = 0; i < Config.bgLine; i++) {
+    Table[i] = new Array();
+    for (let j = 0; j < Config.bgCell; j++) {
+        // Table[i][j] = 'N';
+        Table[i][j] = [Config.bgStyle[0], ''];
+    }
+}
 
 let id = 1
-const BgMap = () => (
+const Map = () => (
     <div className="bg-map">
         {Table.map((items, line) => (
             <div className="line" key={line}>
@@ -17,71 +25,5 @@ const BgMap = () => (
         ))}
     </div>
 )
-
-class Map extends React.Component {
-    constructor(props) {
-        super(props)
-        this.handleController = this.handleController.bind(this)
-    }
-
-    componentDidMount() {
-        window.addEventListener('keypress',
-            (e) => (
-                this.handleController(sa, e.key, timer)
-            )
-        )
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('keypress',
-            (e) => (
-                this.handleController(sa, e.key, timer)
-            )
-        )
-    }
-
-    register(style, point) {
-        switch (style) {
-            case 'N':
-                Table[point[0]][point[1]] = 'N'
-                break;
-            case 'F':
-                Table[point[0]][point[1]] = 'F'
-                break;
-            case 'H':
-                Table[point[0]][point[1]] = 'H'
-                break;
-            case 'B':
-                Table[point[0]][point[1]] = 'B'
-                break;
-            default:
-                break;
-        }
-    }
-    handleController(snake, dir, timer) {
-        console.log(dir);// TODO
-        switch (dir) {
-            case 'w':
-                snake.Turn('U')
-                break
-            case 's':
-                snake.Turn('D')
-                break
-            case 'a':
-                snake.Turn('L')
-                break
-            case 'd':
-                snake.Turn('R')
-                break
-            default:
-                console.log("Please press WASD or ←→↑↓")
-                clearInterval(timer)
-        }
-    }
-
-    render() {
-        return <BgMap />
-    }
-}
 
 export default Map

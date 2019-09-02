@@ -1,4 +1,4 @@
-import { Table, Config } from '../Config'
+import { Config } from '../Config'
 
 /**
  * 描述蛇的对象，围绕 body 结构进行操作

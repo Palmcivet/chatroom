@@ -1,4 +1,3 @@
-import React from 'react'
 import { Config } from '../Config'
 import Snake from './Snake'
 
