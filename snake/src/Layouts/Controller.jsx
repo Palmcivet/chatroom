@@ -5,11 +5,13 @@ class Controller extends Component {
         super(props)
         this.handleController = this.handleController.bind(this)
     }
+
     componentDidMount() {
         window.addEventListener('keypress',
             (e) => (this.handleController(e.key))
         )
     }
+    
     handleController(dir) {
         console.log(dir);
         switch (dir) {
@@ -25,6 +27,7 @@ class Controller extends Component {
                 break;
         }
     }
+
     render() {
         return (
             <div className="controller">
@@ -51,4 +54,4 @@ class Controller extends Component {
     }
 }
 
-export default Controller
+export { Controller }

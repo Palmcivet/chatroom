@@ -1,13 +1,22 @@
 import React from 'react'
-import { Table } from '../Config'
+import { Config } from '../Config'
 
-let id = 1
+let mapTable = new Array()
+for (let i = 0; i < Config.bgLine; i++) {
+    mapTable[i] = new Array();
+    for (let j = 0; j < Config.bgCell; j++) {
+        // mapTable[i][j] = 'N';
+        mapTable[i][j] = Config.bgStyle[0];
+    }
+}
+
+let id = 0
 const Map = () => (
-    <div className="bg-map">
-        {Table.map((items, line) => (
-            <div className="line" key={line}>
+    <div className='bg-map'>
+        {mapTable.map((items, line) => (
+            <div className='line' key={line}>
                 {items.map((item, cell) => (
-                    <div className={item[0]}
+                    <div className='cell'
                         key={cell}
                         id={id++}>
                     </div>
@@ -17,4 +26,4 @@ const Map = () => (
     </div>
 )
 
-export default Map
+export { Map }

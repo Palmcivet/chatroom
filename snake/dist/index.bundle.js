@@ -86,16 +86,16 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/less-loader/dist/cjs.js!./snake/src/style/index.less":
-/*!*****************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/less-loader/dist/cjs.js!./snake/src/style/index.less ***!
-  \*****************************************************************************************************************/
+/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/less-loader/dist/cjs.js!./snake/src/styles/index.less":
+/*!******************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/less-loader/dist/cjs.js!./snake/src/styles/index.less ***!
+  \******************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "* {\n  padding: 0;\n  border: 0;\n  margin: 0;\n  outline: 0;\n  background-color: #dfdfdf;\n  box-sizing: border-box;\n}\n.bg-map {\n  width: 450px;\n  height: 450px;\n  margin: auto;\n  background: #98a08b;\n}\n.bg-map .line {\n  height: 4%;\n}\n.bg-map .cell {\n  width: 4%;\n  height: 100%;\n  float: left;\n  padding: 1px;\n  border: 1px solid #9fa592;\n}\n.bg-map .cell:after {\n  content: \"\";\n  display: block;\n  width: 13px;\n  height: 13px;\n  background-color: #b3baa7;\n}\n", ""]);
+exports.push([module.i, "* {\n  padding: 0;\n  border: 0;\n  margin: 0;\n  outline: 0;\n  background-color: #dfdfdf;\n  box-sizing: border-box;\n}\n.bg-map {\n  width: 450px;\n  height: 450px;\n  margin: auto;\n  background: #98a08b;\n}\n.bg-map .line {\n  height: 4%;\n}\n.bg-map .cell {\n  width: 4%;\n  height: 100%;\n  float: left;\n  padding: 1px;\n  border: 1px solid #9fa592;\n}\n.bg-map .cell:after {\n  content: \"\";\n  display: block;\n  width: 13px;\n  height: 13px;\n  background-color: #b3baa7;\n}\n.F {\n  background-color: #FF00FF;\n}\n", ""]);
 
 
 /***/ }),
@@ -29695,42 +29695,500 @@ module.exports = function (list, options) {
 
 /***/ }),
 
-/***/ "./snake/src/Components/App.jsx":
-/*!**************************************!*\
-  !*** ./snake/src/Components/App.jsx ***!
-  \**************************************/
-/*! exports provided: default */
+/***/ "./snake/src/Components/Handler.jsx":
+/*!******************************************!*\
+  !*** ./snake/src/Components/Handler.jsx ***!
+  \******************************************/
+/*! exports provided: handleRegister, handleParse, handleController */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "handleRegister", function() { return handleRegister; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "handleParse", function() { return handleParse; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "handleController", function() { return handleController; });
+/* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Config */ "./snake/src/Config.jsx");
+
+/**
+ * 使用差值，根据头部颜色，计算蛇身体的颜色
+ * @param {String} headColor - 十六进制颜色字符串
+ */
+
+var changeColor = function changeColor(headColor) {
+  var bodyColor = parseInt(headColor.slice(0, 2), 16) - _Config__WEBPACK_IMPORTED_MODULE_0__["Config"].minusColor;
+  return String(bodyColor);
+};
+/**
+ * 颜色注册，注册后渲染地图，接收对象、节点和颜色
+ */
+
+
+var handleRegister = function handleRegister(map, player, point) {
+  var style = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'N';
+  // 解析 id
+  pointId = _Config__WEBPACK_IMPORTED_MODULE_0__["Config"].bgCell * point[0] + point[1]; // 添加样式
+
+  if (style != 'N') {
+    document.getElementById(pointId).setAttribute('background-color', changeColor(player.color));
+  } else {
+    document.getElementById(pointId).setAttribute('background-color', '#b3baa7');
+  }
+
+  map[point[0]][point[1]][0] = style; // 注册玩家
+
+  map[point[0]][point[1]][1] = player.id;
+};
+/**
+ * 解析玩家地图上点的样式
+ * @param {Arry} map - 三维数组，最后一维只有两个元素：id 和 style
+ * @param {Array} point - 坐标，一维数组，两个元素
+ */
+
+
+var handleParse = function handleParse(map, point) {
+  return map[point[0]][point[1]][0];
+};
+
+var handleController = function handleController(snake, dir, timer) {
+  switch (dir) {
+    case 'w':
+      snake.Turn('U');
+      break;
+
+    case 's':
+      snake.Turn('D');
+      break;
+
+    case 'a':
+      snake.Turn('L');
+      break;
+
+    case 'd':
+      snake.Turn('R');
+      break;
+
+    default:
+      console.log("Please press WASD or ←→↑↓");
+      clearInterval(timer);
+  }
+};
+
+
+
+/***/ }),
+
+/***/ "./snake/src/Components/Map.jsx":
+/*!**************************************!*\
+  !*** ./snake/src/Components/Map.jsx ***!
+  \**************************************/
+/*! exports provided: Map */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Map", function() { return Map; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Config */ "./snake/src/Config.jsx");
+
+
+var mapTable = new Array();
+
+for (var i = 0; i < _Config__WEBPACK_IMPORTED_MODULE_1__["Config"].bgLine; i++) {
+  mapTable[i] = new Array();
+
+  for (var j = 0; j < _Config__WEBPACK_IMPORTED_MODULE_1__["Config"].bgCell; j++) {
+    mapTable[i][j] = 'N'; // mapTable[i][j] = Config.bgStyle[0];
+  }
+}
+
+var id = 0;
+
+var Map = function Map() {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "bg-map"
+  }, mapTable.map(function (items, line) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "line",
+      key: line
+    }, items.map(function (item, cell) {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "cell",
+        key: cell,
+        id: id++
+      });
+    }));
+  }));
+};
+
+
+
+/***/ }),
+
+/***/ "./snake/src/Components/MapGame.jsx":
+/*!******************************************!*\
+  !*** ./snake/src/Components/MapGame.jsx ***!
+  \******************************************/
+/*! exports provided: MapGame */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MapGame", function() { return MapGame; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Map__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Map */ "./snake/src/Components/Map.jsx");
 /* harmony import */ var _Snake__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Snake */ "./snake/src/Components/Snake.jsx");
-/* harmony import */ var _Controller__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Controller */ "./snake/src/Components/Controller.jsx");
+/* harmony import */ var _SnakeGame__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SnakeGame */ "./snake/src/Components/SnakeGame.jsx");
+/* harmony import */ var _Handler__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Handler */ "./snake/src/Components/Handler.jsx");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+
+var MapGame =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(MapGame, _React$Component);
+
+  function MapGame(props) {
+    var _this;
+
+    _classCallCheck(this, MapGame);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(MapGame).call(this, props));
+    var initSnake = new _Snake__WEBPACK_IMPORTED_MODULE_2__["Snake"]('3d4ca1', '#00FF00', 'L', [13, 12]);
+    var game = new _SnakeGame__WEBPACK_IMPORTED_MODULE_3__["Player"](initSnake);
+    game.start();
+    return _this;
+  }
+
+  _createClass(MapGame, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      window.addEventListener('keypress', function (e) {
+        return Object(_Handler__WEBPACK_IMPORTED_MODULE_4__["handleController"])(sa, e.key, timer);
+      });
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      window.removeEventListener('keypress', function (e) {
+        return Object(_Handler__WEBPACK_IMPORTED_MODULE_4__["handleController"])(sa, e.key, timer);
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Map__WEBPACK_IMPORTED_MODULE_1__["Map"], null);
+    }
+  }]);
+
+  return MapGame;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+
+
+/***/ }),
+
+/***/ "./snake/src/Components/Snake.jsx":
+/*!****************************************!*\
+  !*** ./snake/src/Components/Snake.jsx ***!
+  \****************************************/
+/*! exports provided: Snake */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Snake", function() { return Snake; });
+/* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Config */ "./snake/src/Config.jsx");
+
+/**
+ * 描述蛇的对象，围绕 body 结构进行操作
+ * @param {String} id - 哈希字符串，标识蛇
+ * @param {String} color - 字符，标识头的颜色
+ * @param {String} initDir - 初始时的方向
+ * @param {Array} initBody - 初始时的位置，即头的位置
+ */
+
+function Snake(id, color, initDir, initBody) {
+  var _this = this;
+
+  this.id = id;
+  this.color = color;
+  this.dir = initDir;
+  this.head = initBody;
+  /**
+   * generate the next position
+   */
+
+  var __next = function __next() {
+    var next = _this.head;
+
+    switch (_this.dir) {
+      case 'U':
+        next[0] = _this.head[0] - 1;
+        break;
+
+      case 'D':
+        next[0] = _this.head[0] + 1;
+        break;
+
+      case 'L':
+        next[1] = _this.head[1] - 1;
+        break;
+
+      case 'R':
+        next[1] = _this.head[1] + 1;
+        break;
+    }
+
+    return next;
+  };
+
+  this.next = __next();
+  this.body = new Array();
+  this.body[0] = [];
+  /**
+   * @param {String} changeDir - 方向
+   */
+
+  this.Turn = function (changeDir) {
+    if (_Config__WEBPACK_IMPORTED_MODULE_0__["Config"].dirA.indexOf(changeDir) == -1 && _Config__WEBPACK_IMPORTED_MODULE_0__["Config"].dirB.indexOf(changeDir) == -1) return "Invalid Argument: changeDir";
+    _this.dir = changeDir;
+  };
+  /**
+   * 描述蛇捕获食物的动作，在捕食时触发
+   * @return {Object} - an object with array
+   */
+
+
+  this.Eat = function () {
+    var head = __next();
+
+    _this.body.reverse();
+
+    _this.body.push(head);
+
+    _this.body.reverse();
+
+    return {
+      head: head,
+      next: __next()
+    };
+  };
+  /**
+   * 描述蛇的常规移动，周期性触发
+   * @returns {Object} - an object with array
+   */
+
+
+  this.Move = function () {
+    var head = __next();
+
+    _this.body.reverse();
+
+    _this.body.push(head);
+
+    var tail = _this.body.pop();
+
+    _this.body.reverse();
+
+    return {
+      head: head,
+      next: __next(),
+      tail: tail
+    };
+  };
+}
+
+
+
+/***/ }),
+
+/***/ "./snake/src/Components/SnakeGame.jsx":
+/*!********************************************!*\
+  !*** ./snake/src/Components/SnakeGame.jsx ***!
+  \********************************************/
+/*! exports provided: Player */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Player", function() { return Player; });
+/* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Config */ "./snake/src/Config.jsx");
+/* harmony import */ var _Snake__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Snake */ "./snake/src/Components/Snake.jsx");
+/* harmony import */ var _Handler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Handler */ "./snake/src/Components/Handler.jsx");
+
+
+
+
+var Table = function Table() {
+  var table = new Array();
+
+  for (var i = 0; i < _Config__WEBPACK_IMPORTED_MODULE_0__["Config"].bgLine; i++) {
+    table[i] = new Array();
+
+    for (var j = 0; j < _Config__WEBPACK_IMPORTED_MODULE_0__["Config"].bgCell; j++) {
+      table[i][j] = ['N', ''];
+    }
+  }
+
+  return table;
+};
+
+function Player(snake) {
+  /**
+   * constructor(), with a instance
+   */
+  var playerChain = new Array(new _Snake__WEBPACK_IMPORTED_MODULE_1__["Snake"](snake));
+  var playerMap = new Table();
+  /**
+   * 当玩家进入，执行相应操作
+   * @param {Object} - 要添加的玩家
+   */
+
+  this.addPlayer = function (addSnake) {
+    return playerChain.push(new _Snake__WEBPACK_IMPORTED_MODULE_1__["Snake"](addSnake));
+  };
+  /**
+   * 当玩家离开，将玩家从 playerChain 中移除
+   * @param {Object} - 要移除的玩家
+   */
+
+
+  this.delPlayer = function (delSnake) {
+    return pass;
+  };
+  /**
+   * 常规移动，每次移动进行判断：检测是否撞墙或重合
+   */
+
+
+  this.start = function () {
+    setInterval(function () {
+      return playerChain.forEach(function (eachPlayer) {
+        moveJudge(eachPlayer);
+      });
+    }, _Config__WEBPACK_IMPORTED_MODULE_0__["Config"].spdSnake);
+  };
+  /**
+   * 移动检测，有如下步骤：
+   * 1. 根据下一位置进行判断：
+   *      - 移动，返回头尾位置，头部添加颜色，尾部移除颜色
+   *      - 捕获，返回头部位置，只添加颜色，不移除（即变长）
+   *      - 碰撞
+   * 2. 地图上进行相应绘制
+   */
+
+
+  var moveJudge = function moveJudge(player) {
+    switch (Object(_Handler__WEBPACK_IMPORTED_MODULE_2__["handleParse"])(playerMap, player.next)) {
+      case 'N':
+        Object(_Handler__WEBPACK_IMPORTED_MODULE_2__["handleRegister"])(playerMap, player, player.Move().next, 'H');
+        Object(_Handler__WEBPACK_IMPORTED_MODULE_2__["handleRegister"])(playerMap, player, player.Move().head, 'B');
+        Object(_Handler__WEBPACK_IMPORTED_MODULE_2__["handleRegister"])(playerMap, player, player.Move().tail, 'N');
+        break;
+
+      case 'F':
+        Object(_Handler__WEBPACK_IMPORTED_MODULE_2__["handleRegister"])(playerMap, player, player.Move().next, 'H');
+        Object(_Handler__WEBPACK_IMPORTED_MODULE_2__["handleRegister"])(playerMap, player, player.Move().head, 'B');
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  return playerChain;
+}
+
+
+
+/***/ }),
+
+/***/ "./snake/src/Config.jsx":
+/*!******************************!*\
+  !*** ./snake/src/Config.jsx ***!
+  \******************************/
+/*! exports provided: Config */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Config", function() { return Config; });
+var Config = {
+  bgLine: 25,
+  bgCell: 25,
+  bgStyle: ['N', 'F', 'H'],
+  dirA: ['U', 'D', 'L', 'R'],
+  dirB: ['W', 'S', 'A', 'D'],
+  minusColor: 33,
+  // hex
+  spdSnake: 800,
+  // per cell
+  spdRefresh: 200 // 0.2s
+
+};
+
+
+/***/ }),
+
+/***/ "./snake/src/Layouts/App.jsx":
+/*!***********************************!*\
+  !*** ./snake/src/Layouts/App.jsx ***!
+  \***********************************/
+/*! exports provided: App */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "App", function() { return App; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Components_MapGame__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Components/MapGame */ "./snake/src/Components/MapGame.jsx");
+/* harmony import */ var _Controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Controller */ "./snake/src/Layouts/Controller.jsx");
 
 
 
 
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Map__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_MapGame__WEBPACK_IMPORTED_MODULE_1__["MapGame"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Controller__WEBPACK_IMPORTED_MODULE_2__["Controller"], null));
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (App);
+
 
 /***/ }),
 
-/***/ "./snake/src/Components/Controller.jsx":
-/*!*********************************************!*\
-  !*** ./snake/src/Components/Controller.jsx ***!
-  \*********************************************/
-/*! exports provided: default */
+/***/ "./snake/src/Layouts/Controller.jsx":
+/*!******************************************!*\
+  !*** ./snake/src/Layouts/Controller.jsx ***!
+  \******************************************/
+/*! exports provided: Controller */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Controller", function() { return Controller; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -29833,309 +30291,6 @@ function (_Component) {
   return Controller;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-/* harmony default export */ __webpack_exports__["default"] = (Controller);
-
-/***/ }),
-
-/***/ "./snake/src/Components/Map.jsx":
-/*!**************************************!*\
-  !*** ./snake/src/Components/Map.jsx ***!
-  \**************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Config */ "./snake/src/Config.jsx");
-/* harmony import */ var _Snake__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Snake */ "./snake/src/Components/Snake.jsx");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-
-var id = 1;
-
-var BgMap = function BgMap() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "bg-map"
-  }, _Config__WEBPACK_IMPORTED_MODULE_1__["Table"].map(function (items, line) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "line",
-      key: line
-    }, items.map(function (item, cell) {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: item[0] == 'F' ? "food cell" : item[0] == 'H' ? "head cell" : item[0] == 'B' ? "body cell" : "cell",
-        key: cell,
-        id: id++
-      });
-    }));
-  }));
-};
-
-var Map =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(Map, _React$Component);
-
-  function Map(props) {
-    var _this;
-
-    _classCallCheck(this, Map);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Map).call(this, props));
-    _this.handleController = _this.handleController.bind(_assertThisInitialized(_this));
-    return _this;
-  }
-
-  _createClass(Map, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      var sa = new _Snake__WEBPACK_IMPORTED_MODULE_2__["default"]('2e2', 'D', [2, 2]);
-      var timer = setInterval(function () {
-        sa.Move(); // sa.Eat()
-
-        console.log(sa.head); // TODO
-      }, _Config__WEBPACK_IMPORTED_MODULE_1__["Config"].spdSnake);
-      window.addEventListener('keypress', function (e) {
-        return _this2.handleController(sa, e.key, timer);
-      });
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      var _this3 = this;
-
-      window.removeEventListener('keypress', function (e) {
-        return _this3.handleController(sa, e.key, timer);
-      });
-    }
-  }, {
-    key: "register",
-    value: function register(style, point) {
-      switch (style) {
-        case 'N':
-          _Config__WEBPACK_IMPORTED_MODULE_1__["Table"][point[0]][point[1]] = 'N';
-          break;
-
-        case 'F':
-          _Config__WEBPACK_IMPORTED_MODULE_1__["Table"][point[0]][point[1]] = 'F';
-          break;
-
-        case 'H':
-          _Config__WEBPACK_IMPORTED_MODULE_1__["Table"][point[0]][point[1]] = 'H';
-          break;
-
-        case 'B':
-          _Config__WEBPACK_IMPORTED_MODULE_1__["Table"][point[0]][point[1]] = 'B';
-          break;
-
-        default:
-          break;
-      }
-    }
-  }, {
-    key: "handleController",
-    value: function handleController(snake, dir, timer) {
-      console.log(dir); // TODO
-
-      switch (dir) {
-        case 'w':
-          snake.Turn('U');
-          break;
-
-        case 's':
-          snake.Turn('D');
-          break;
-
-        case 'a':
-          snake.Turn('L');
-          break;
-
-        case 'd':
-          snake.Turn('R');
-          break;
-
-        default:
-          console.log("Please press WASD or ←→↑↓");
-          clearInterval(timer);
-          break;
-      }
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(BgMap, null);
-    }
-  }]);
-
-  return Map;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
-/* harmony default export */ __webpack_exports__["default"] = (Map);
-
-/***/ }),
-
-/***/ "./snake/src/Components/Snake.jsx":
-/*!****************************************!*\
-  !*** ./snake/src/Components/Snake.jsx ***!
-  \****************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Config */ "./snake/src/Config.jsx");
-
-/**
- * 描述蛇的对象，围绕 body 结构进行操作
- * @param {String} id - 哈希字符，标识蛇
- * @param {Array} initPos - 初始时的位置，即头的位置
- * @param {String} initDir - 初始时的方向
- */
-
-function Snake(id, initDir, initBody) {
-  var _this = this;
-
-  this.id = id;
-  this.dir = initDir;
-  this.head = initBody;
-  this.body = new Array();
-  this.body[0] = [];
-  /**
-   * generate the next position
-   */
-
-  var __next = function __next() {
-    switch (_this.dir) {
-      case 'U':
-        _this.head[0] = _this.head[0] - 1;
-        break;
-
-      case 'D':
-        _this.head[0] = _this.head[0] + 1;
-        break;
-
-      case 'L':
-        _this.head[1] = _this.head[1] - 1;
-        break;
-
-      case 'R':
-        _this.head[1] = _this.head[1] + 1;
-        break;
-    }
-
-    return _this.head;
-  };
-
-  this.Turn = function (changeDir) {
-    if (_Config__WEBPACK_IMPORTED_MODULE_0__["Config"].dirA.indexOf(changeDir) == -1 && _Config__WEBPACK_IMPORTED_MODULE_0__["Config"].dirB.indexOf(changeDir) == -1) return "Invalid Argument: changeDir";
-    _this.dir = changeDir;
-  };
-  /**
-   * 描述蛇捕获食物的动作，在捕食时触发
-   * @param {Array} foodPos - 食物的位置，the position of the food to be eaten
-   */
-
-
-  this.Eat = function () {
-    var tmp = __next();
-
-    _this.body.reverse();
-
-    _this.body.push(tmp);
-
-    _this.body.reverse();
-
-    return tmp;
-  };
-  /**
-   * 描述蛇的常规移动，周期性触发
-   * @returns {Object}
-   */
-
-
-  this.Move = function () {
-    var tmp = __next();
-
-    _this.body.reverse();
-
-    _this.body.push(tmp);
-
-    _this.body.pop();
-
-    _this.body.reverse();
-
-    return {
-      head: tmp
-    };
-  };
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (Snake);
-
-/***/ }),
-
-/***/ "./snake/src/Config.jsx":
-/*!******************************!*\
-  !*** ./snake/src/Config.jsx ***!
-  \******************************/
-/*! exports provided: Config, Table */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Config", function() { return Config; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Table", function() { return Table; });
-var Config = {
-  bgLine: 25,
-  bgCell: 25,
-
-  /**
-   * NULL: N
-   * Food: F
-   * Head: H
-   * Body: B
-   */
-  bgStyle: ['N', 'F', 'H', 'B'],
-  dirA: ['U', 'D', 'L', 'R'],
-  dirB: ['W', 'S', 'A', 'D'],
-  spdSnake: 800,
-  // per cell
-  spdRefresh: 200 // 0.2s
-  // Temporary
-
-};
-var Table = new Array();
-
-for (var i = 0; i < Config.bgLine; i++) {
-  Table[i] = new Array();
-
-  for (var j = 0; j < Config.bgCell; j++) {
-    // Table[i][j] = 'N';
-    Table[i][j] = [Config.bgStyle[0], ''];
-  }
-}
-
 
 
 /***/ }),
@@ -30153,25 +30308,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Components_App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Components/App */ "./snake/src/Components/App.jsx");
-/* harmony import */ var _style_index_less__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./style/index.less */ "./snake/src/style/index.less");
-/* harmony import */ var _style_index_less__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_style_index_less__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _Layouts_App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Layouts/App */ "./snake/src/Layouts/App.jsx");
+/* harmony import */ var _styles_index_less__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./styles/index.less */ "./snake/src/styles/index.less");
+/* harmony import */ var _styles_index_less__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_styles_index_less__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
 
-Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_App__WEBPACK_IMPORTED_MODULE_2__["default"], null), document.getElementById('root'));
+Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Layouts_App__WEBPACK_IMPORTED_MODULE_2__["App"], null), document.getElementById('root'));
 
 /***/ }),
 
-/***/ "./snake/src/style/index.less":
-/*!************************************!*\
-  !*** ./snake/src/style/index.less ***!
-  \************************************/
+/***/ "./snake/src/styles/index.less":
+/*!*************************************!*\
+  !*** ./snake/src/styles/index.less ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var content = __webpack_require__(/*! !../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/less-loader/dist/cjs.js!./index.less */ "./node_modules/css-loader/dist/cjs.js!./node_modules/less-loader/dist/cjs.js!./snake/src/style/index.less");
+var content = __webpack_require__(/*! !../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/less-loader/dist/cjs.js!./index.less */ "./node_modules/css-loader/dist/cjs.js!./node_modules/less-loader/dist/cjs.js!./snake/src/styles/index.less");
 
 if (typeof content === 'string') {
   content = [[module.i, content, '']];

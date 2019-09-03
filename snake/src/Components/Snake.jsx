@@ -19,6 +19,8 @@ function Snake(id, color, initDir, initBody) {
 
     /**
      * generate the next position
+     * 生成运动过程中的下一个点
+     * @returns {Array} - 一维数组，描述下一个点。an object with array
      */
     let __next = () => {
         let next = this.head
@@ -36,23 +38,25 @@ function Snake(id, color, initDir, initBody) {
                 next[1] = this.head[1] + 1
                 break
         }
-        return head
+        return next
     }
 
+    /**
+     * @param {String} changeDir - 字符串，要改变的方向。the direction to be changed
+     */
     this.Turn = (changeDir) => {
-        if ((Config.dirA.indexOf(changeDir) == -1) && (Config.dirB.indexOf(changeDir) == -1))
-            return "Invalid Argument: changeDir"
+        if ((Config.dirA.indexOf(changeDir) == -1) && (Config.dirB.indexOf(changeDir) == -1)) {
+            console.log("Invalid Argument: changeDir")
+            return
+        }
         this.dir = changeDir
     }
 
     /**
      * 描述蛇捕获食物的动作，在捕食时触发
-     * @param {Array} foodPos - 食物的位置，the position of the food to be eaten
+     * @returns {Object} - 对象，包含两个元素。an object with array
      */
     this.Eat = () => {
-        // this.body.reverse()
-        // this.body.push(__next())
-
         let head = __next()
         this.body.reverse()
         this.body.push(head)
@@ -65,7 +69,7 @@ function Snake(id, color, initDir, initBody) {
 
     /**
      * 描述蛇的常规移动，周期性触发
-     * @returns {Object} - an object with array
+     * @returns {Object} - 对象，包含三个元素。an object with array
      */
     this.Move = () => {
         let head = __next()
@@ -81,4 +85,4 @@ function Snake(id, color, initDir, initBody) {
     }
 }
 
-export default Snake
+export { Snake }

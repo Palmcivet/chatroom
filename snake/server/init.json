@@ -1,3 +1,4 @@
+// '#' + Math.floor(Math.random() * 0xffffff).toString(16).padEnd(6, '0');
 {
     /* init 时，Server 生成各个玩家信息，发送到 Client */
     "id": "3d4ca1",
