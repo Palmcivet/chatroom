@@ -1,7 +1,7 @@
 import { Config } from "../Config";
 
 /**
- * 使用差值，根据头部颜色，计算蛇身体的颜色
+ * 根据头部颜色，计算蛇身体的颜色
  * @param {String} headColor - 十六进制颜色字符串
  * @returns {String} - 转换后的十六进制字符
  */

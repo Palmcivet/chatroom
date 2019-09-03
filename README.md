@@ -17,7 +17,7 @@
 多人在线贪吃🐍
 
 ### 文件结构
-- layouts
+- Layouts
     - App：渲染图形界面
     - Controller：控制器
 - Components

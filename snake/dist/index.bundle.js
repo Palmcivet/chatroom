@@ -29710,16 +29710,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Config */ "./snake/src/Config.jsx");
 
 /**
- * 使用差值，根据头部颜色，计算蛇身体的颜色
+ * 根据头部颜色，计算蛇身体的颜色
  * @param {String} headColor - 十六进制颜色字符串
+ * @returns {String} - 转换后的十六进制字符
  */
 
 var changeColor = function changeColor(headColor) {
-  var bodyColor = parseInt(headColor.slice(0, 2), 16) - _Config__WEBPACK_IMPORTED_MODULE_0__["Config"].minusColor;
-  return String(bodyColor);
+  var bodyColor = parseInt(headColor.slice(1, 3), 16) - _Config__WEBPACK_IMPORTED_MODULE_0__["Config"].minusColor;
+  return String('#' + bodyColor);
 };
 /**
- * 颜色注册，注册后渲染地图，接收对象、节点和颜色
+ * 注册后渲染地图，接收对象、节点和颜色
+ * @param {Array} map - 三维数组，地图对象
+ * @param {Object} player - snake 对象
+ * @param {Array} point - 一维数组
+ * @param {String} style - 地图上点的类型，用来注册地图
  */
 
 
@@ -29748,6 +29753,14 @@ var handleRegister = function handleRegister(map, player, point) {
 var handleParse = function handleParse(map, point) {
   return map[point[0]][point[1]][0];
 };
+/**
+ * 控制器，处理键盘事件，以更改方向
+ * TODO: 综合处理鼠标事件
+ * @param {Object} snake - snake 对象
+ * @param {Array} dir - 更改方向
+ * @param {Object} timer - 定时器对象，用以调试时取消定时器
+ */
+
 
 var handleController = function handleController(snake, dir, timer) {
   switch (dir) {
@@ -29798,7 +29811,8 @@ for (var i = 0; i < _Config__WEBPACK_IMPORTED_MODULE_1__["Config"].bgLine; i++) 
   mapTable[i] = new Array();
 
   for (var j = 0; j < _Config__WEBPACK_IMPORTED_MODULE_1__["Config"].bgCell; j++) {
-    mapTable[i][j] = 'N'; // mapTable[i][j] = Config.bgStyle[0];
+    // mapTable[i][j] = 'N';
+    mapTable[i][j] = _Config__WEBPACK_IMPORTED_MODULE_1__["Config"].bgStyle[0];
   }
 }
 
@@ -29937,8 +29951,13 @@ function Snake(id, color, initDir, initBody) {
   this.color = color;
   this.dir = initDir;
   this.head = initBody;
+  this.next = __next();
+  this.body = new Array();
+  this.body[0] = [];
   /**
    * generate the next position
+   * 生成运动过程中的下一个点
+   * @returns {Array} - 一维数组，描述下一个点。an object with array
    */
 
   var __next = function __next() {
@@ -29964,21 +29983,22 @@ function Snake(id, color, initDir, initBody) {
 
     return next;
   };
-
-  this.next = __next();
-  this.body = new Array();
-  this.body[0] = [];
   /**
-   * @param {String} changeDir - 方向
+   * @param {String} changeDir - 字符串，要改变的方向。the direction to be changed
    */
 
+
   this.Turn = function (changeDir) {
-    if (_Config__WEBPACK_IMPORTED_MODULE_0__["Config"].dirA.indexOf(changeDir) == -1 && _Config__WEBPACK_IMPORTED_MODULE_0__["Config"].dirB.indexOf(changeDir) == -1) return "Invalid Argument: changeDir";
+    if (_Config__WEBPACK_IMPORTED_MODULE_0__["Config"].dirA.indexOf(changeDir) == -1 && _Config__WEBPACK_IMPORTED_MODULE_0__["Config"].dirB.indexOf(changeDir) == -1) {
+      console.log("Invalid Argument: changeDir");
+      return;
+    }
+
     _this.dir = changeDir;
   };
   /**
    * 描述蛇捕获食物的动作，在捕食时触发
-   * @return {Object} - an object with array
+   * @returns {Object} - 对象，包含两个元素，分别描述当前头部和尾部的位置。an object with array
    */
 
 
@@ -29998,7 +30018,7 @@ function Snake(id, color, initDir, initBody) {
   };
   /**
    * 描述蛇的常规移动，周期性触发
-   * @returns {Object} - an object with array
+   * @returns {Object} - 对象，包含三个数组元素，分别描述下一个位置、当前头部和尾部的位置。an object with array
    */
 
 
@@ -30057,14 +30077,11 @@ var Table = function Table() {
 };
 
 function Player(snake) {
-  /**
-   * constructor(), with a instance
-   */
   var playerChain = new Array(new _Snake__WEBPACK_IMPORTED_MODULE_1__["Snake"](snake));
   var playerMap = new Table();
   /**
    * 当玩家进入，执行相应操作
-   * @param {Object} - 要添加的玩家
+   * @param {Object} addSnake - 要添加的玩家
    */
 
   this.addPlayer = function (addSnake) {
@@ -30072,7 +30089,7 @@ function Player(snake) {
   };
   /**
    * 当玩家离开，将玩家从 playerChain 中移除
-   * @param {Object} - 要移除的玩家
+   * @param {Object} delSnake - 要移除的玩家
    */
 
 
@@ -30085,7 +30102,7 @@ function Player(snake) {
 
 
   this.start = function () {
-    setInterval(function () {
+    return setInterval(function () {
       return playerChain.forEach(function (eachPlayer) {
         moveJudge(eachPlayer);
       });
@@ -30098,6 +30115,7 @@ function Player(snake) {
    *      - 捕获，返回头部位置，只添加颜色，不移除（即变长）
    *      - 碰撞
    * 2. 地图上进行相应绘制
+   * @param {Object} player - 蛇的对象
    */
 
 
