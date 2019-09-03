@@ -54,7 +54,7 @@ function Snake(id, color, initDir, initBody) {
 
     /**
      * 描述蛇捕获食物的动作，在捕食时触发
-     * @returns {Object} - 对象，包含两个元素。an object with array
+     * @returns {Object} - 对象，包含两个元素，分别描述当前头部和尾部的位置。an object with array
      */
     this.Eat = () => {
         let head = __next()
@@ -69,7 +69,7 @@ function Snake(id, color, initDir, initBody) {
 
     /**
      * 描述蛇的常规移动，周期性触发
-     * @returns {Object} - 对象，包含三个元素。an object with array
+     * @returns {Object} - 对象，包含三个数组元素，分别描述下一个位置、当前头部和尾部的位置。an object with array
      */
     this.Move = () => {
         let head = __next()
