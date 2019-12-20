@@ -1,41 +1,78 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { observable, computed, action } from "mobx";
-import { observer } from "mobx-react";
+import { observable, computed } from 'mobx';
+import { observer, Provider, inject } from 'mobx-react'
 
-class storeTree {
-    @observable a = 9;
-    @observable b = 10;
-    @computed get getSum() {
-        return this.a * this.b
+//数据结构
+class Todo {
+    @observable todos = [
+        {
+            id: 1,
+            title: '任务1',
+            finished: false
+        }, {
+            id: 2,
+            title: '任务2',
+            finished: false
+        }
+    ];
+
+    @computed get unfinishedTodoCount() {
+        return this.todos.filter(todo => !todo.finished).length;
     }
-    @action addA = () => (this.a++)
-    @action decA = () => (this.a--)
 }
 
 @observer
-class App extends Component {
-    constructor(props) {
-        super(props)
-    }
-    return() {
-        <div>
+class TodoListView extends Component {
+    render() {
+        return (
             <div>
-                {props.store.getSum}
+                <ul>
+                    {this.props.todoList.todos.map(todo =>
+                        <TodoView todo={todo} key={todo.id} />
+                    )}
+                </ul>
+                未完成任务数：{this.props.todoList.unfinishedTodoCount}
             </div>
-            <button onClick={props.store.addA}>
-                Add
-            </button>
-            <button onClick={props.store.decA}>
-                Dec
-            </button>
-        </div>
+        )
     }
 }
 
-const storeSum = new storeTree();
+@observer
+class TodoView extends Component {
+    render() {
+        var todo = this.props.todo;
+        return (
+            <li>
+                <label>
+                    <input
+                        type="checkbox"
+                        checked={todo.finished}
+                        onClick={() => this.props.todo.finished = !this.props.todo.finished}
+                    />
+                    {todo.title}
+                </label>
+            </li>
+        )
+    }
+}
+
+const todoList = new Todo();
+
+@inject('todo')
+class ToDoApp extends Component {
+    render() {
+        return (
+            <div>
+                <TodoListView todoList={this.props.todo} />
+            </div>
+        );
+    }
+}
 
 render(
-    <App store={storeSum} />,
+    <Provider todo={todoList}>
+        <ToDoApp />
+    </Provider>,
     document.getElementById('root')
 )

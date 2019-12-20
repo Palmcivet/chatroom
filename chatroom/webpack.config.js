@@ -6,7 +6,7 @@ const OUTPUT = path.join(__dirname, 'dist')
 
 module.exports = {
     mode: 'development',
-    entry: path.join(ENTRY, 'index.jsx'),
+    entry: path.join(ENTRY, 'default.jsx'),
     devtool: 'source-map',
     output: {
         path: OUTPUT,
@@ -35,7 +35,10 @@ module.exports = {
             use: {
                 loader: 'babel-loader',
                 options: {
-                    presets: ['@babel/env', '@babel/react'],
+                    presets: [
+                        '@babel/env',
+                        '@babel/react'
+                    ],
                     plugins: [
                         [
                             "@babel/plugin-proposal-decorators",
@@ -49,7 +52,16 @@ module.exports = {
             }
         }, {
             test: /\.less$/,
-            use: ['style-loader', 'css-loader', 'less-loader']
+            loader: 'less-loader',
+        }, {
+            test: /\.css$/,
+            loader: [
+                'style-loader',
+                'css-loader'
+            ],
+        }, {
+            test: /\.(eot|woff|woff2|ttf)([\\?]?.*)$/,
+            loader: 'file-loader'
         }]
     }
 };
