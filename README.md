@@ -5,13 +5,6 @@
 - [TODO list](#todo-list)
     - [Design](#design)
     - [Server](#server)
-    - [Changelog](#changelog-1)
-- [chatroom](#chatroom)
-    - [Design](#design-1)
-    - [Changelog](#changelog-2)
-        - [1.0.0](#100)
-        - [0.2.1](#021)
-        - [0.1.0](#010)
 
 ## Snake
 多人在线贪吃🐍
@@ -37,7 +30,6 @@
 
 ### Changelog
 
-
 ## TODO list
 参考自 [React Redux](https://react-redux.js.org/) [文档](http://cn.redux.js.org/)
 
@@ -52,7 +44,7 @@
 主界面
 - 显示方式：SHOW 已完成|未完成|全部
 - 项目：✅ Item
-- Add 按钮：输入框 
+- Add 按钮：输入框
 
 任务属性：
 - 任务状态：
@@ -73,7 +65,7 @@
             "status": "STATUS_FINISHED",
             "content": "test item 1"
         },{
-            "id": "i-34377", 
+            "id": "i-34377",
             "status": "STATUS_FINISHED",
             "content": "test item 2"
         },{
@@ -85,32 +77,3 @@
     // ...
 }]
 ```
-
-### Changelog
-
-## chatroom
-A demo, the chat room
-
-- WebSocket
-- React
-- Redux
-- axios
-
-### Design
-导航栏
-1. 登录用户名
-2. 退出按钮
-
-### Changelog
-#### 1.0.0
-- Adjust the structure of development
-- Perfect the README
-
-#### 0.2.1
-- Modified to home page
-- Add some login code
-- Fixed some bugs
-
-#### 0.1.0
-- Forked from [Web](www.cssmoban.com)
-- Cut some snippets

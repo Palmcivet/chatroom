@@ -8,7 +8,8 @@
 	"private": true,
 	"scripts": {
 		"build": "webpack --config chatroom/webpack.config.js",
-		"watch": "webpack --config chatroom/webpack.config.js --watch"
+		"watch": "webpack --config chatroom/webpack.config.js --watch",
+		"server": "webpack-dev-server --config chatroom/webpack.config.js"
 	},
 	"dependencies": {
 		"antd": "^3.26.0",
