@@ -2,7 +2,7 @@
 	"name": "chatroom",
 	"version": "1.0.0",
 	"main": "index.jsx",
-	"repository": "https://github.com/Palmcivet/chatroom.git",
+	"repository": "https://github.com/Palmcivet/react-practice.git",
 	"author": "Palm Civet",
 	"license": "MIT",
 	"private": true,
