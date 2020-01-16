@@ -1,5 +1,4 @@
 .DS_Store
-chatroom/
 node_modules/
 yarn-error.log
 */dist/
