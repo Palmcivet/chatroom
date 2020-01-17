@@ -1,0 +1,38 @@
+body {
+    background: url('https://cn.bing.com/th?id=OHR.ValleyForge_ZH-CN8129420249_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp');
+}
+
+div.slider {
+    height: 100%;
+    width : 100%;
+}
+
+div.slider:hover {
+    max-height: 600px;
+    overflow-y: scroll;
+}
+
+section.box::before {
+    content: "";
+    filter : blur(20px);
+    z-index: -1;
+}
+
+section.box {
+    background: rgba(2, 2, 2, 0.5);
+    font-size : 25px;
+    width     : 500px;
+    height    : 500px;
+}
+
+li,
+span {
+    color: #ffffff;
+}
+
+img.test {
+    width    : 500px;
+    height   : 500px;
+    /* filter: drop-shadow(70px 0.5 0 blue); */
+    filter   : hue-rotate(90deg);
+}
