@@ -1,64 +1,74 @@
-import React, { Component } from 'react';
-import { render } from 'react-dom';
-import './Styles/test.css';
+import React, { Component, useState } from "react";
+import { render } from "react-dom";
+import "./Styles/test.css";
 // import './Styles/index.css';
+import { Menu, Icon, Input } from "antd";
 
-class Input extends Component {
-    constructor(props) {
-        super(props);
-        this.el = React.createRef();
-        this.focus = this.focus.bind(this);
-    }
+const { SubMenu } = Menu;
 
-    focus() {
-        this.el.current.focus();
-    }
+const Nav = () => {
+	return (
+		<Menu mode="horizontal">
+			<Menu.Item key="mail">
+				<Icon type="mail" />
+				Navigation One
+			</Menu.Item>
+			<Menu.Item key="app" disabled>
+				<Icon type="appstore" />
+				Navigation Two
+			</Menu.Item>
+			<SubMenu
+				title={
+					<span className="submenu-title-wrapper">
+						<Icon type="setting" />
+						Navigation Three - Submenu
+					</span>
+				}
+			>
+				<Menu.ItemGroup title="Item 1">
+					<Menu.Item key="setting:1">Option 1</Menu.Item>
+					<Menu.Item key="setting:2">Option 2</Menu.Item>
+				</Menu.ItemGroup>
+				<Menu.ItemGroup title="Item 2">
+					<Menu.Item key="setting:3">Option 3</Menu.Item>
+					<Menu.Item key="setting:4">Option 4</Menu.Item>
+				</Menu.ItemGroup>
+			</SubMenu>
+			<Menu.Item key="alipay">
+				<a href="https://ant.design" target="_blank" rel="noopener noreferrer">
+					Navigation Four - Link
+				</a>
+			</Menu.Item>
+		</Menu>
+	);
+};
 
-    render() {
-        return (
-            <input type="text" ref={this.el} />
-        );
-    }
-}
+const LoginView = (props) => {
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
 
-class SignInModal extends Component {
-    constructor(props) {
-        super(props);
-        this.InputComp = React.createRef();
-    }
+	return (
+		<div>
+			<Input
+				placeholder="username"
+				value={username}
+				onChange={(e) => setUsername(e.target.value)}
+			/>
+			<Input.Password
+				placeholder="password"
+				visibilityToggle
+				value={password}
+				onChange={(e) => setPassword(e.target.value)}
+			/>
+		</div>
+	);
+};
 
-    componentDidMount() {
-        this.InputComp.focus();
-    }
+const App = () => (
+	<>
+		<Nav />
+		<LoginView />
+	</>
+);
 
-    render() {
-        return (
-            <div>
-                <label>User name: </label>
-                <Input ref={comp => { this.InputComp = comp; }} />
-            </div>
-        )
-    }
-}
-render(
-    <div className="slide">
-        <section className="box">
-            <ul className="box">
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-            </ul>
-            <span>
-                aaasdgdf
-                gsdgdfgf
-                dfgfghfg
-                hghgsddg
-            </span>
-            <SignInModal />
-        </section>
-    </div>,
-    document.getElementById('root')
-)
+render(<App />, document.getElementById("root"));

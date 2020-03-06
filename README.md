@@ -8,9 +8,6 @@
 ## TODO list
 参考自 [React Redux](https://react-redux.js.org/) [文档](http://cn.redux.js.org/)
 
-![](https://to-do-cdn.microsoft.com/webapp/4687dcb4c4ce7d1688f20fc417518f25cbe89bec59d8d8454ef0a3ebb42ae80a/desktop.jpg)
-图片来自 [Microsoft](https://www.microsoft.com/)
-
 ### Design
 侧栏：
 - 列表
