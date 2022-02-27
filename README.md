@@ -1,51 +1,5 @@
-- [TODO list](#todo-list)
-    - [Design](#design)
-    - [Server](#server)
+# Out From The Hole
 
+[博客](https://palmcivet.github.io/) 文章踩坑小记项目 demo
 
-### Changelog
-
-## TODO list
-参考自 [React Redux](https://react-redux.js.org/) [文档](http://cn.redux.js.org/)
-
-### Design
-侧栏：
-- 列表
-- Add
-
-主界面
-- 显示方式：SHOW 已完成|未完成|全部
-- 项目：✅ Item
-- Add 按钮：输入框
-
-任务属性：
-- 任务状态：
-    - 已完成：STATUS_FINISHED
-    - 未完成：STATUS_UNFINISHED
-- 内容
-- ID
-
-### Server
-目前采用模拟 API 测试，后期添加服务器
-```json
-[{
-    "id": "l-2324",
-    "name": "test list 1",
-    "items":
-        [{
-            "id": "i-34376",
-            "status": "STATUS_FINISHED",
-            "content": "test item 1"
-        },{
-            "id": "i-34377",
-            "status": "STATUS_FINISHED",
-            "content": "test item 2"
-        },{
-            // ...
-        }]
-},{
-    "id": "l-2325",
-    "name": "test list 2",
-    // ...
-}]
-```
+- css-table-layout：[《踩坑小记——CSS Table 布局》](https://palmcivet.github.io/2021/08/cai-keng-xiao-ji-css-table/)

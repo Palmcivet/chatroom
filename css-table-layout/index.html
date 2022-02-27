@@ -1,0 +1,46 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Table Height demo</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <table>
+        <colgroup>
+          <col />
+          <col />
+        </colgroup>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td><span>title</span></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><span>content-1</span></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td><span>content-3</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+  <style>
+    table {
+      height: 226px;
+    }
+    tr {
+      cursor: pointer;
+    }
+    tr:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+    td {
+      height: 38px;
+    }
+  </style>
+</html>

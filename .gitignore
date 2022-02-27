@@ -1,5 +1,26 @@
 .DS_Store
-node_modules/
-*/dist/
-yarn-error.log
-design.md
+node_modules
+.yarnclean
+yarn.lock
+
+# Local env files
+.env
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
+
+# Build output
+dist
+build
